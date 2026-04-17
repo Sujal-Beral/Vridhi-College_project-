@@ -24,20 +24,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- 2. SPA Navigation Helper ---
     function switchSection(targetSectionId) {
-        // Hide all sections by removing the active class
         document.querySelectorAll('.app-section').forEach(section => {
             section.classList.remove('active');
         });
-        // Show the targeted section
-        document.getElementById(targetSectionId).classList.add('active');
+        const target = document.getElementById(targetSectionId);
+        if(target) target.classList.add('active');
+    }
+
+    // Restore Session if on index.html
+    if(document.getElementById('dashboard-section') && localStorage.getItem('vridhiUser')) {
+        renderDashboard(JSON.parse(localStorage.getItem('vridhiUser')));
+        switchSection('dashboard-section');
     }
 
     // --- 3. Login to User Info ---
     const loginForm = document.getElementById("login-form");
-    loginForm.addEventListener("submit", (event) => {
+    loginForm?.addEventListener("submit", (event) => {
         event.preventDefault(); 
-        // Logic to verify password would go here if you had a backend
-        switchSection('userinfo-section'); // Move to step 2
+        switchSection('userinfo-section'); 
     });
 
     // --- 4. User Info: Category Selection & Dynamic Inputs ---
@@ -47,99 +51,130 @@ document.addEventListener("DOMContentLoaded", () => {
 
     categoryCards.forEach(card => {
         card.addEventListener('click', () => {
-            // Remove active from all cards, add to clicked card
             categoryCards.forEach(c => c.classList.remove('active'));
             card.classList.add('active');
             
-            // Get the value and store it in our hidden form input
             const categoryValue = card.getAttribute('data-category');
             hiddenCategoryInput.value = categoryValue;
 
-            // Generate dynamic HTML based on selection
+            // Display an Exact Income Input for accurate 20-20-30-30 math
             dynamicContainer.style.display = 'flex';
-            
-            if (categoryValue === 'Business') {
-                dynamicContainer.innerHTML = `
-                    <label for="income_range">Annual Business Income</label>
-                    <select id="income_range" required>
-                        <option value="" disabled selected>Select your range...</option>
-                        <option value="Small">Small (< ₹10L/year)</option>
-                        <option value="Medium">Medium (₹10L–₹50L/year)</option>
-                        <option value="Large">Large (> ₹50L/year)</option>
-                    </select>
-                `;
-            } else if (categoryValue === 'Student' || categoryValue === 'Employee') {
-                const labelText = categoryValue === 'Student' ? 'Annual Allowance' : 'Annual Salary';
-                dynamicContainer.innerHTML = `
-                    <label for="income_range">${labelText}</label>
-                    <select id="income_range" required>
-                        <option value="" disabled selected>Select your range...</option>
-                        <option value="< ₹3L">Less than ₹3L</option>
-                        <option value="₹3L - ₹10L">₹3L - ₹10L</option>
-                        <option value="> ₹10L">More than ₹10L</option>
-                    </select>
-                `;
-            } else {
-                // Housewife or Farmer (assuming no extra field needed right now, hide container)
-                dynamicContainer.innerHTML = '';
-                dynamicContainer.style.display = 'none';
-            }
+            dynamicContainer.innerHTML = `
+                <label for="exact_income">Total Monthly Income (₹)</label>
+                <input type="number" id="exact_income" placeholder="E.g. 50000" min="0" required>
+            `;
         });
     });
 
-    // --- 5. Submit User Info & Show Dashboard ---
+    // --- 5. Submit User Info & Build Dashboard UI ---
     const userInfoForm = document.getElementById("userinfo-form");
-    userInfoForm.addEventListener("submit", (event) => {
+    userInfoForm?.addEventListener("submit", (event) => {
         event.preventDefault();
 
-        // 1. Check if a category was actually clicked
         if(!hiddenCategoryInput.value) {
             alert("Please select a category before continuing!");
             return;
         }
 
-        // 2. Gather Data
         const userData = {
             name: document.getElementById('full_name').value,
-            age: document.getElementById('user_age').value,
-            mobile: document.getElementById('mobile_num').value,
             category: hiddenCategoryInput.value,
-            income: document.getElementById('income_range') ? document.getElementById('income_range').value : 'N/A'
+            income: Number(document.getElementById('exact_income').value)
         };
 
-        // 3. Save to localStorage
         localStorage.setItem('vridhiUser', JSON.stringify(userData));
-
-        // 4. Populate Dashboard UI
-        const dashboardContent = document.getElementById('dashboard-content');
-        dashboardContent.innerHTML = `
-            <p style="font-size: 1.1rem; color: var(--secondary); margin-bottom: 10px;">
-                Hello, <strong>${userData.name}</strong>!
-            </p>
-            <p style="color: gray; font-size: 0.9rem;">
-                Profile: ${userData.category} ${userData.income !== 'N/A' ? `(${userData.income})` : ''}
-            </p>
-            <br>
-            <p style="color: var(--primary); font-weight: bold;">
-                Your growth engine is currently being fueled. 🚀
-            </p>
-        `;
-
-        // 5. Move to Dashboard
+        renderDashboard(userData);
         switchSection('dashboard-section');
     });
 
-    // --- 6. Optional: Logout / Restart flow ---
-    const logoutBtn = document.getElementById('logout-btn');
-    logoutBtn?.addEventListener('click', () => {
-        localStorage.removeItem('vridhiUser');
-        loginForm.reset();
-        userInfoForm.reset();
-        categoryCards.forEach(c => c.classList.remove('active'));
-        dynamicContainer.style.display = 'none';
-        hiddenCategoryInput.value = '';
-        
-        switchSection('login-section');
+    // --- 6. Dashboard Generator Function ---
+    function renderDashboard(userData) {
+        const dashboardContent = document.getElementById('dashboard-content');
+        if(!dashboardContent) return; // Exit if on learn.html
+
+        // Calculate 20-20-30-30 Logic
+        const inc = userData.income;
+        const secureSavings = inc * 0.20;
+        const emergencyShield = inc * 0.20;
+        const homeEssentials = inc * 0.30;
+        const wealthGen = inc * 0.30;
+
+        // Generate Dynamic Widget based on User Category
+        let specialSuggestionsHTML = "";
+        switch(userData.category) {
+            case "Student":
+                specialSuggestionsHTML = `<div class="suggestion-pill">📚 Micro-Investments</div> <div class="suggestion-pill">🎓 Education Goal Tracker</div>`;
+                break;
+            case "Employee":
+                specialSuggestionsHTML = `<div class="suggestion-pill">🏢 Tax Saver (80C) Ideas</div> <div class="suggestion-pill">📈 Automated SIP Planner</div>`;
+                break;
+            case "Business":
+                specialSuggestionsHTML = `<div class="suggestion-pill">💼 Business Reserve Fund</div> <div class="suggestion-pill">📊 Working Capital Tracker</div>`;
+                break;
+            case "Housewife":
+                specialSuggestionsHTML = `<div class="suggestion-pill">🪙 Digital Gold & FDs</div> <div class="suggestion-pill">🛒 Household Expense Buffer</div>`;
+                break;
+            case "Farmer":
+                specialSuggestionsHTML = `<div class="suggestion-pill">🌾 Seasonal Income Allocator</div> <div class="suggestion-pill">📜 Govt. Schemes Info</div>`;
+                break;
+        }
+
+        // Injecting the Dashboard Layout
+        dashboardContent.innerHTML = `
+            <div class="dashboard-header">
+                <h2>Hello, ${userData.name}!</h2>
+                <div class="total-income">Total Input: ₹${inc.toLocaleString('en-IN')}</div>
+            </div>
+
+            <div class="allocation-grid">
+                <div class="allocation-card">
+                    <h4>Secure Savings (20%)</h4>
+                    <div class="amount">₹${secureSavings.toLocaleString('en-IN')}</div>
+                </div>
+                <div class="allocation-card">
+                    <h4>Emergency Shield (20%)</h4>
+                    <div class="amount">₹${emergencyShield.toLocaleString('en-IN')}</div>
+                </div>
+                <div class="allocation-card">
+                    <h4>Home & Essentials (30%)</h4>
+                    <div class="amount">₹${homeEssentials.toLocaleString('en-IN')}</div>
+                </div>
+                <div class="allocation-card" style="border-top-color: var(--accent);">
+                    <h4>Wealth Generation (30%)</h4>
+                    <div class="amount">₹${wealthGen.toLocaleString('en-IN')}</div>
+                </div>
+            </div>
+
+            <div class="category-widget">
+                <h3>Recommended for ${userData.category}s</h3>
+                <div class="widget-suggestions">
+                    ${specialSuggestionsHTML}
+                </div>
+            </div>
+        `;
+    }
+
+    // --- 7. Sign Out / Update Flow ---
+    // Handling multiple buttons across pages by querying all with the class
+    document.querySelectorAll('.logout-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            localStorage.removeItem('vridhiUser');
+            if(window.location.pathname.includes('learn.html')) {
+                window.location.href = 'index.html'; // Redirect to home if on Learn page
+            } else {
+                window.location.reload(); // Refresh index.html to show login
+            }
+        });
+    });
+
+    document.querySelectorAll('.update-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            if(window.location.pathname.includes('learn.html')) {
+                window.location.href = 'index.html'; // Needs to go to index to update
+            } else {
+                switchSection('userinfo-section'); // Go back to info section
+            }
+        });
     });
 
 });
