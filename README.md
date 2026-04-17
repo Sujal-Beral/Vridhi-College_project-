@@ -1,4 +1,4 @@
-Project Introduction: Vridhi (वृद्धि)
+# Project Introduction: Vridhi (वृद्धि)
 
 The Vision: In India, we often know how much we earn, but struggle with exactly where to put it to build long-term wealth. Vridhi is not an expense tracker—it is a proactive Financial Allocation and Growth Engine designed to map out exactly what you should do with your money from the moment you earn it.
 
