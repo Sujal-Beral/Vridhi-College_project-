@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/auth.css">
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="css/goals.css">
+    <link rel="stylesheet" href="css/investments.css">
 </head>
 
 <body>
@@ -108,7 +109,7 @@
                 <div class="nav-brand">Vridhi</div>
                 <div class="nav-links">
                     <a href="#" id="nav-dashboard" class="active-link">My Dashboard</a>
-                    <a href="#">Smart Investments</a>
+                    <a href="#" id="nav-investments">Smart Investments</a>
                     <a href="#" id="nav-goals">My Goals</a>
                     <a href="learn.html">Vridhi Learn</a>
                 </div>
@@ -137,6 +138,81 @@
                     <div id="goals-grid" class="goals-grid">
                         <!-- Goal cards injected dynamically -->
                     </div>
+                </div>
+
+                <!-- Smart Investments UI added here -->
+                <div id="investments-view" class="view-section">
+                    
+                    <!-- 1. Top Section -->
+                    <div class="investments-header-container">
+                        <h2>Explore Investments</h2>
+                        <div class="search-bar-container">
+                            <input type="text" placeholder="Search funds or categories" class="investment-search" readonly>
+                            <button class="filter-btn">⚙️</button>
+                        </div>
+                    </div>
+
+                    <!-- 2. Investment Categories Grid -->
+                    <div class="investment-categories">
+                        <div class="inv-category-card" data-category="Large Cap">
+                            <div class="inv-icon">🏢</div>
+                            <span>Large Cap</span>
+                        </div>
+                        <div class="inv-category-card" data-category="Mid Cap">
+                            <div class="inv-icon">🏭</div>
+                            <span>Mid Cap</span>
+                        </div>
+                        <div class="inv-category-card" data-category="Multi Cap">
+                            <div class="inv-icon">🌐</div>
+                            <span>Multi Cap</span>
+                        </div>
+                        <div class="inv-category-card" data-category="Index Funds">
+                            <div class="inv-icon">📈</div>
+                            <span>Index Funds</span>
+                        </div>
+                        <div class="inv-category-card" data-category="Industrial">
+                            <div class="inv-icon">🏗️</div>
+                            <span>Industrial</span>
+                        </div>
+                        <div class="inv-category-card" data-category="Debt Funds">
+                            <div class="inv-icon">🛡️</div>
+                            <span>Debt Funds</span>
+                        </div>
+                    </div>
+
+                    <!-- 3. Explore All Funds Button -->
+                    <button class="explore-all-btn">Explore all funds &rarr;</button>
+
+                    <!-- 5. Fund List Section (Dynamic) -->
+                    <div id="fund-list-container" class="fund-list-container" style="display: none;">
+                        <h3 id="fund-list-title" class="fund-list-title">Top Funds</h3>
+                        <div id="fund-list-items" class="fund-list-items"></div>
+                        
+                        <!-- 6. Expandable Info Section -->
+                        <div class="fund-info-accordion">
+                            <button class="accordion-toggle" id="info-accordion-toggle">
+                                <span id="accordion-title">What is this fund?</span>
+                                <span class="accordion-icon">&#9660;</span>
+                            </button>
+                            <div class="accordion-content" id="info-accordion-content">
+                                <p id="accordion-desc">Information about this fund category will appear here.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. Explore More Section -->
+                    <div class="explore-more-section">
+                        <h3>Explore More</h3>
+                        <div class="explore-more-card">
+                            <div class="em-icon">🥇</div>
+                            <div class="em-details">
+                                <h4>Digital Gold</h4>
+                                <p>Start investing with just ₹10</p>
+                            </div>
+                            <div class="em-arrow">&rarr;</div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -195,6 +271,7 @@
     <script src="js/dashboard.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/goals.js"></script>
+    <script src="js/investments.js"></script>
 </body>
 
 </html>

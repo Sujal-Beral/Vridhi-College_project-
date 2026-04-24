@@ -5,10 +5,13 @@ function renderDashboard(userData) {
     if (!dashboardContent) return; // Exit if on learn.html
 
     const inc = userData.income;
-    const secureSavings = inc * 0.20;
-    const emergencyShield = inc * 0.20;
-    const homeEssentials = inc * 0.30;
-    const wealthGen = inc * 0.30;
+    const needsPct = userData.budgetRule ? userData.budgetRule.needs : 65;
+    const wantsPct = userData.budgetRule ? userData.budgetRule.wants : 20;
+    const savingsPct = userData.budgetRule ? userData.budgetRule.savings : 15;
+
+    const fixedExpenses = inc * (needsPct / 100);
+    const guiltFreeFun = inc * (wantsPct / 100);
+    const savingsInvestments = inc * (savingsPct / 100);
 
     let specialSuggestionsHTML = "";
     switch (userData.category) {
@@ -25,21 +28,20 @@ function renderDashboard(userData) {
             <div class="total-income">Total Input: ₹${inc.toLocaleString('en-IN')}</div>
         </div>
         <div class="allocation-grid">
-            <div class="allocation-card">
-                <h4>Secure Savings (20%)</h4>
-                <div class="amount">₹${secureSavings.toLocaleString('en-IN')}</div>
-            </div>
-            <div class="allocation-card">
-                <h4>Emergency Shield (20%)</h4>
-                <div class="amount">₹${emergencyShield.toLocaleString('en-IN')}</div>
-            </div>
-            <div class="allocation-card">
-                <h4>Home & Essentials (30%)</h4>
-                <div class="amount">₹${homeEssentials.toLocaleString('en-IN')}</div>
+            <div class="allocation-card" style="border-top-color: #ff4d4d;">
+                <h4>Fixed Expenses (${needsPct}%)</h4>
+                <div class="amount">₹${fixedExpenses.toLocaleString('en-IN')}</div>
+                <div style="font-size: 0.8rem; color: gray; margin-top: 5px;">Needs (Rent, Bills, Groceries)</div>
             </div>
             <div class="allocation-card" style="border-top-color: var(--accent);">
-                <h4>Wealth Generation (30%)</h4>
-                <div class="amount">₹${wealthGen.toLocaleString('en-IN')}</div>
+                <h4>Guilt-Free Fun (${wantsPct}%)</h4>
+                <div class="amount">₹${guiltFreeFun.toLocaleString('en-IN')}</div>
+                <div style="font-size: 0.8rem; color: gray; margin-top: 5px;">Wants (Movies, Dining, Gadgets)</div>
+            </div>
+            <div class="allocation-card" style="border-top-color: var(--primary);">
+                <h4>Savings & Investments (${savingsPct}%)</h4>
+                <div class="amount">₹${savingsInvestments.toLocaleString('en-IN')}</div>
+                <div style="font-size: 0.8rem; color: gray; margin-top: 5px;">Future (SIPs, Debt Payoff)</div>
             </div>
         </div>
         <div class="category-widget">

@@ -26,8 +26,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
             dynamicContainer.style.display = 'flex';
             dynamicContainer.innerHTML = `
-                <label for="exact_income">Total Monthly Income (₹)</label>
-                <input type="number" id="exact_income" placeholder="E.g. 50000" min="0" required>
+                <div style="margin-bottom: 15px;">
+                    <label for="exact_income">Total Monthly Income (₹)</label>
+                    <input type="number" id="exact_income" placeholder="E.g. 50000" min="0" style="width: 100%;" required>
+                </div>
+                <label>Customize Budget Rule (Default: 65-20-15)</label>
+                <div style="display: flex; gap: 10px; margin-top: 5px;">
+                    <div style="flex: 1; display: flex; flex-direction: column;">
+                        <label for="rule_needs" style="font-size: 0.8rem; font-weight: normal; margin-bottom: 3px;">Needs %</label>
+                        <input type="number" id="rule_needs" value="65" min="0" max="100" style="padding: 8px;" required>
+                    </div>
+                    <div style="flex: 1; display: flex; flex-direction: column;">
+                        <label for="rule_wants" style="font-size: 0.8rem; font-weight: normal; margin-bottom: 3px;">Wants %</label>
+                        <input type="number" id="rule_wants" value="20" min="0" max="100" style="padding: 8px;" required>
+                    </div>
+                    <div style="flex: 1; display: flex; flex-direction: column;">
+                        <label for="rule_savings" style="font-size: 0.8rem; font-weight: normal; margin-bottom: 3px;">Future %</label>
+                        <input type="number" id="rule_savings" value="15" min="0" max="100" style="padding: 8px;" required>
+                    </div>
+                </div>
+                <div id="rule-error" style="color: #ff4d4d; font-size: 0.85rem; margin-top: 8px; display: none; text-align: center;">Percentages must add up to 100%</div>
             `;
         });
     });
@@ -42,10 +60,29 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+        let needs = 65, wants = 20, savings = 15;
+        const needsInput = document.getElementById('rule_needs');
+        const wantsInput = document.getElementById('rule_wants');
+        const savingsInput = document.getElementById('rule_savings');
+
+        if (needsInput && wantsInput && savingsInput) {
+            needs = Number(needsInput.value);
+            wants = Number(wantsInput.value);
+            savings = Number(savingsInput.value);
+
+            if (needs + wants + savings !== 100) {
+                document.getElementById('rule-error').style.display = 'block';
+                return;
+            } else {
+                document.getElementById('rule-error').style.display = 'none';
+            }
+        }
+
         const userData = {
             name: document.getElementById('full_name').value,
             category: hiddenCategoryInput.value,
-            income: Number(document.getElementById('exact_income').value)
+            income: Number(document.getElementById('exact_income').value),
+            budgetRule: { needs, wants, savings }
         };
 
         localStorage.setItem('vridhiUser', JSON.stringify(userData));
