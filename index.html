@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +8,11 @@
     <title>Vridhi | From Earnings to Wealth</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <div id="main-content"> 
-        
+    <div id="main-content">
+
         <div id="login-section" class="app-section active">
             <div class="login-card">
                 <div class="brand-header">
@@ -30,17 +32,19 @@
                         <label for="user_email">Email</label>
                         <input type="email" name="User_email" id="user_email" placeholder="Enter your email" required>
                     </div>
-                    
+
                     <div class="input-group">
                         <label for="user_password">Password</label>
-                        <input type="password" name="User_email_Password" id="user_password" placeholder="Enter your password" required>
+                        <input type="password" name="User_email_Password" id="user_password"
+                            placeholder="Enter your password" required>
                     </div>
-                    
+
                     <div class="checkbox-group">
                         <input type="checkbox" name="age_check" id="age_check" required>
-                        <label for="age_check">I am 18+ and accept the <a href="#" id="open-terms">Terms and Conditions</a>.</label>
+                        <label for="age_check">I am 18+ and accept the <a href="#" id="open-terms">Terms and
+                                Conditions</a>.</label>
                     </div>
-                    
+
                     <button type="submit" class="login-btn">Log In</button>
                 </form>
             </div>
@@ -59,7 +63,7 @@
                 <form id="userinfo-form">
                     <div class="input-group">
                         <label for="full_name">Full Name</label>
-                        <input type="text" id="full_name" placeholder="E.g. Rahul Sharma" required>
+                        <input type="text" id="full_name" placeholder="E.g. Sumit Thokal" required>
                     </div>
 
                     <div class="input-row">
@@ -69,7 +73,8 @@
                         </div>
                         <div class="input-group" style="flex: 2;">
                             <label for="mobile_num">Mobile Number</label>
-                            <input type="tel" id="mobile_num" placeholder="10-digit number" pattern="[0-9]{10}" required>
+                            <input type="tel" id="mobile_num" placeholder="10-digit number" pattern="[0-9]{10}"
+                                required>
                         </div>
                     </div>
 
@@ -86,7 +91,7 @@
                     </div>
 
                     <div id="dynamic-input-container" class="input-group" style="display: none;">
-                        </div>
+                    </div>
 
                     <button type="submit" class="login-btn">Submit & Continue</button>
                 </form>
@@ -97,9 +102,9 @@
             <nav class="navbar">
                 <div class="nav-brand">Vridhi</div>
                 <div class="nav-links">
-                    <a href="index.html" class="active-link">My Dashboard</a>
+                    <a href="#" id="nav-dashboard" class="active-link">My Dashboard</a>
                     <a href="#">Smart Investments</a>
-                    <a href="#">My Goals</a>
+                    <a href="#" id="nav-goals">My Goals</a>
                     <a href="learn.html">Vridhi Learn</a>
                 </div>
                 <div class="nav-actions">
@@ -109,14 +114,63 @@
             </nav>
 
             <div class="dashboard-wrapper">
-                <div id="dashboard-content">
+                <div id="dashboard-view" class="view-section active">
+                    <div id="dashboard-content"></div>
+                </div>
+
+                <!-- My Goals UI added here -->
+                <div id="goals-view" class="view-section">
+                    <div class="goals-header-container">
+                        <div>
+                            <h2>My Financial Goals</h2>
+                            <p class="subtitle" style="margin-bottom: 0; text-align: left;">Plan and track your
+                                milestones</p>
+                        </div>
+                        <button id="open-add-goal-btn" class="action-btn add-goal-btn">+ Add Goal</button>
                     </div>
+
+                    <div id="goals-grid" class="goals-grid">
+                        <!-- Goal cards injected dynamically -->
+                    </div>
+                </div>
             </div>
         </div>
 
     </div>
 
-    <div id="overlay"></div> 
+    <!-- Add Goal Modal -->
+    <div id="goal-modal-overlay" class="modal-overlay">
+        <div class="goal-modal">
+            <div class="modal-header">
+                <h3>Add New Goal</h3>
+                <button id="close-goal-modal" class="close-btn">&times;</button>
+            </div>
+            <form id="add-goal-form">
+                <div class="input-group">
+                    <label for="goal_name">Goal Name</label>
+                    <input type="text" id="goal_name" placeholder="E.g. Buy Laptop, Car" required>
+                </div>
+                <div class="input-group">
+                    <label for="goal_target">Target Amount (₹)</label>
+                    <input type="number" id="goal_target" placeholder="E.g. 50000" min="1" required>
+                </div>
+                <div class="input-group">
+                    <label for="goal_allocation">Monthly Allocation</label>
+                    <div class="input-row" style="gap: 10px;">
+                        <input type="number" id="goal_allocation" placeholder="Value" min="1" required style="flex: 2;">
+                        <select id="allocation_type" style="flex: 1;">
+                            <option value="amount">₹ (Fixed)</option>
+                            <option value="percent">% of Income</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="goal-smart-suggestion" class="smart-suggestion"></div>
+                <button type="submit" class="login-btn">Save Goal</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="overlay"></div>
     <div id="terms-panel">
         <div class="terms-header">
             <h5>Terms and Conditions</h5>
@@ -127,10 +181,12 @@
             <p><strong>2. No Financial Advice:</strong> Vridhi is an educational tool...</p>
             <p><strong>3. User Accountability:</strong> You are solely responsible for accuracy...</p>
             <p><strong>4. Property & Protection:</strong> Vridhi owns all site content...</p>
-            <p><strong>5. Academic Project Disclaimer:</strong> Vridhi is developed as an academic exhibition project...</p>
+            <p><strong>5. Academic Project Disclaimer:</strong> Vridhi is developed as an academic exhibition project...
+            </p>
         </div>
     </div>
 
     <script src="app.js"></script>
 </body>
+
 </html>
