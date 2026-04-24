@@ -1,0 +1,155 @@
+/* --- Main Login & User Info UI --- */
+
+#login-section.active, 
+#userinfo-section.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    padding: 20px;
+}
+
+#main-content {
+    width: 100%;
+}
+
+.login-card {
+    background-color: var(--bg-white);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(10, 34, 57, 0.1);
+    width: 380px;
+}
+
+.info-card {
+    width: 450px;
+    max-width: 95vw;
+}
+
+.brand-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+.animated-logo {
+    color: var(--primary);
+    font-size: 2.2rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.animated-logo .letter {
+    opacity: 0;
+    animation: loopType 4s infinite ease-in-out;
+    animation-delay: var(--delay);
+}
+
+/* --- Form Styling --- */
+
+.subtitle {
+    text-align: center;
+    font-size: 0.9rem;
+    color: gray;
+    margin-bottom: 30px;
+}
+
+.input-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: var(--secondary);
+}
+
+.input-group input, 
+.input-group select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    transition: border 0.3s;
+    font-size: 0.95rem;
+}
+
+.input-group input:focus, 
+.input-group select:focus {
+    border-color: var(--primary);
+}
+
+/* --- Category Cards --- */
+
+.category-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.category-card {
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: gray;
+}
+
+.category-card:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.category-card.active {
+    border-color: var(--primary);
+    background-color: rgba(80, 200, 120, 0.1);
+    color: var(--primary);
+}
+
+/* --- Additional Elements --- */
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    margin-bottom: 20px;
+}
+
+.checkbox-group a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--primary);
+    color: var(--bg-white);
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+    background-color: var(--secondary);
+}
