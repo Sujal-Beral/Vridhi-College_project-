@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/Vridhi_logo.jpeg">
+    <title>Vridhi | From Earnings to Wealth</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/animations.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/auth.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" href="/css/goals.css">
+    <link rel="stylesheet" href="/css/investments.css">
+    <link rel="stylesheet" href="/css/profile.css">
+    <link rel="stylesheet" href="/css/survey.css">
+    <link rel="stylesheet" href="/css/community.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+    <link rel="stylesheet" href="/css/financialReport.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- html2pdf.js CDN (Phase 3 PDF export) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        .lang-selector { display: flex; gap: 5px; align-items: center; }
+        .lang-btn { padding: 4px 8px; border: 1px solid var(--primary); background: transparent; color: var(--primary); border-radius: 4px; cursor: pointer; font-size: 0.75rem; font-weight: bold; }
+        .lang-btn.active { background: var(--primary); color: white; }
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tab-btn { flex: 1; padding: 10px; border: none; background: #eee; cursor: pointer; border-radius: 4px; font-weight: bold; }
+        .tab-btn.active { background: var(--primary); color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .community-nav { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .com-btn { padding: 8px 16px; border: 1px solid var(--primary); background: transparent; color: var(--primary); border-radius: 4px; cursor: pointer; }
+        .com-btn.active { background: var(--primary); color: white; }
+        .com-view { display: none; }
+        .com-view.active { display: block; }
+        .dashboard-layout { display: flex; gap: 20px; flex-wrap: wrap; }
+        .chart-container { flex: 1; min-width: 300px; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .summary-container { flex: 1; min-width: 300px; }
+        #error-msg, #reg-error-msg { color: red; font-size: 0.9em; margin-top: 10px; }
+    </style>
+</head>
+
+<body>
+
+    <div id="main-content">
+
+        <!-- LOGIN SECTION -->
+        <div id="login-section" class="app-section active">
+            <div class="login-card">
+                <div class="brand-header">
+                    <div class="animated-logo">
+                        <span class="letter" style="--delay: 0s">V</span>
+                        <span class="letter" style="--delay: 0.15s">r</span>
+                        <span class="letter" style="--delay: 0.3s">i</span>
+                        <span class="letter" style="--delay: 0.45s">d</span>
+                        <span class="letter" style="--delay: 0.6s">h</span>
+                        <span class="letter" style="--delay: 0.75s">i</span>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: flex-end; margin-bottom: 12px;">
+                    <select id="login-lang-select" class="login-lang-select" onchange="applyLanguage(this.value)" aria-label="Select Language">
+                        <option value="en">🌐 English</option>
+                        <option value="mr">🌐 मराठी</option>
+                        <option value="hi">🌐 हिंदी</option>
+                    </select>
+                </div>
+                <p class="subtitle" data-i18n="subtitle">From Earnings to Wealth</p>
+
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchAuthTab('login')" data-i18n="login">Log In</button>
+                    <button class="tab-btn" onclick="switchAuthTab('register')" data-i18n="register">Register</button>
+                </div>
+
+                <!-- Login Form -->
+                <form id="login-form" class="tab-content active">
+                    <div class="input-group">
+                        <label for="login_email" data-i18n="email">Email</label>
+                        <input type="email" id="login_email" data-i18n="email" placeholder="Enter your email" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="login_password" data-i18n="password">Password</label>
+                        <input type="password" id="login_password" data-i18n="password" placeholder="Enter your password" required>
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <div class="checkbox-group" style="margin-bottom: 0;">
+                            <input type="checkbox" id="remember_me">
+                            <label for="remember_me" data-i18n="remember_me">Remember me</label>
+                        </div>
+                        <a href="#" id="forgot-password-link" style="color: #0A2342; font-size: 0.85rem; text-decoration: none; font-weight: 600;">Forgot Password?</a>
+                    </div>
+
+                    <button type="submit" class="login-btn" data-i18n="login">Log In</button>
+                    <div id="error-msg"></div>
+                </form>
+
+                <!-- FORGOT PASSWORD MODAL -->
+                <div id="forgot-password-modal" style="display: none; position: fixed; inset: 0; background: rgba(10,35,66,0.5); z-index: 9999; justify-content: center; align-items: center;">
+                    <div style="background: white; padding: 28px; border-radius: 12px; max-width: 400px; width: 90%; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
+                        <h3 style="margin: 0 0 8px; color: #0A2342; font-size: 1.2rem;">Reset Password</h3>
+                        <p style="margin: 0 0 16px; font-size: 0.88rem; color: #64748b;">Enter your registered email and we will send you a secure password reset link.</p>
+                        <form id="forgot-password-form">
+                            <div class="input-group" style="margin-bottom: 15px;">
+                                <label for="forgot_email" style="display: block; font-size: 0.85rem; margin-bottom: 5px; color: #334155; font-weight: 600;">Email Address</label>
+                                <input type="email" id="forgot_email" placeholder="Enter your email" required style="width: 100%; padding: 10px; border: 1.5px solid #cbd5e1; border-radius: 6px; box-sizing: border-box;">
+                            </div>
+                            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                                <button type="button" id="close-forgot-modal" style="padding: 9px 16px; background: #e2e8f0; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; color: #475569;">Cancel</button>
+                                <button type="submit" id="send-reset-btn" style="padding: 9px 16px; background: #50C878; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 700;">Send Reset Link</button>
+                            </div>
+                            <div id="forgot-msg" style="margin-top: 12px; font-size: 0.85rem; text-align: center;"></div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Register Form -->
+                <form id="register-form" class="tab-content">
+                    <div class="input-group">
+                        <label for="reg_name">Full Name</label>
+                        <input type="text" id="reg_name" placeholder="Enter full name" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="reg_email" data-i18n="email">Email</label>
+                        <input type="email" id="reg_email" data-i18n="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="reg_password" data-i18n="password">Password</label>
+                        <input type="password" id="reg_password" data-i18n="password" placeholder="Create password" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="reg_confirm_password" data-i18n="confirm_password">Confirm Password</label>
+                        <input type="password" id="reg_confirm_password" data-i18n="confirm_password" placeholder="Confirm password" required>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="age_check" required>
+                        <label for="age_check"><span data-i18n="i_agree">I am 18+ and accept the</span> <a href="#" id="open-terms" data-i18n="terms">Terms and Conditions</a>.</label>
+                    </div>
+
+                    <button type="submit" class="login-btn" data-i18n="register">Register</button>
+                    <div id="reg-error-msg"></div>
+                </form>
+            </div>
+        </div>
+
+        <!-- USER INFO SECTION -->
+        <div id="userinfo-section" class="app-section">
+            <div class="login-card info-card">
+                <div class="animated-logo" style="gap: 10px;">
+                    <span class="letter" style="--delay: 0s">Tell</span>
+                    <span class="letter" style="--delay: 0.15s">Us</span>
+                    <span class="letter" style="--delay: 0.3s">About</span>
+                    <span class="letter" style="--delay: 0.45s">You</span>
+                </div>
+                <p class="subtitle">Let's personalize your Vridhi experience.</p>
+
+                <form id="userinfo-form">
+                    <div class="input-group">
+                        <label data-i18n="select_category">Select Category</label>
+                        <div class="category-grid" id="category-grid">
+                            <div class="category-card" data-category="Student">Student</div>
+                            <div class="category-card" data-category="Employee">Salaried Employee</div>
+                            <div class="category-card" data-category="Business">Business Owner</div>
+                            <div class="category-card" data-category="Housewife">Housewife</div>
+                            <div class="category-card" data-category="Farmer">Farmer</div>
+                        </div>
+                        <input type="hidden" id="selected_category" required>
+                    </div>
+
+                    <div id="dynamic-input-container" class="input-group" style="display: none;">
+                        <div style="margin-bottom: 15px;">
+                            <label for="exact_income" data-i18n="monthly_income_label">Total Monthly Income (₹)</label>
+                            <input type="number" id="exact_income" placeholder="E.g. 50000" min="0" style="width: 100%;" required>
+                        </div>
+                        <label data-i18n="customize_budget">Customize Budget Rule (Default: 20-20-30-30)</label>
+                        <div style="display: flex; gap: 10px; margin-top: 5px;">
+                            <div style="flex: 1; display: flex; flex-direction: column;">
+                                <label for="rule_secure" style="font-size: 0.8rem; margin-bottom: 3px;" data-i18n="secure_savings_pct">Secure Savings %</label>
+                                <input type="number" id="rule_secure" value="20" min="0" max="100" style="padding: 8px;" required>
+                            </div>
+                            <div style="flex: 1; display: flex; flex-direction: column;">
+                                <label for="rule_emergency" style="font-size: 0.8rem; margin-bottom: 3px;" data-i18n="emergency_shield_pct">Emergency Shield %</label>
+                                <input type="number" id="rule_emergency" value="20" min="0" max="100" style="padding: 8px;" required>
+                            </div>
+                            <div style="flex: 1; display: flex; flex-direction: column;">
+                                <label for="rule_home" style="font-size: 0.8rem; margin-bottom: 3px;" data-i18n="home_essentials_pct">Home & Essentials %</label>
+                                <input type="number" id="rule_home" value="30" min="0" max="100" style="padding: 8px;" required>
+                            </div>
+                            <div style="flex: 1; display: flex; flex-direction: column;">
+                                <label for="rule_wealth" style="font-size: 0.8rem; margin-bottom: 3px;" data-i18n="wealth_gen_pct">Wealth Gen %</label>
+                                <input type="number" id="rule_wealth" value="30" min="0" max="100" style="padding: 8px;" required>
+                            </div>
+                        </div>
+                        <div id="rule-error" style="color: #ff4d4d; font-size: 0.85rem; margin-top: 8px; display: none; text-align: center;" data-i18n="pct_error">Percentages must add up to 100%</div>
+                    </div>
+
+                    <button type="submit" class="login-btn" data-i18n="submit_continue">Submit & Continue</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- DASHBOARD SECTION -->
+        <div id="dashboard-section" class="app-section">
+            <nav class="navbar">
+                <div class="nav-brand">Vridhi <span class="nav-tagline">वृद्धि</span></div>
+                <div class="nav-links">
+                    <a href="#" id="nav-dashboard" class="active-link" onclick="switchView('dashboard-view', this); return false;" data-i18n="nav_dashboard">Dashboard</a>
+                    <a href="#" id="nav-simulator" onclick="switchView('simulator-view', this); return false;" data-i18n="nav_simulator">What-If Simulator</a>
+                    <a href="#" id="nav-investments" onclick="switchView('investments-view', this); return false;" data-i18n="nav_investments">Smart Investments</a>
+                    <a href="#" id="nav-goals" onclick="switchView('goals-view', this); return false;" data-i18n="nav_goals">My Goals</a>
+                    <a href="#" id="nav-profile" onclick="switchView('profile-view', this); return false;" data-i18n="nav_profile">Financial Profile</a>
+                    <a href="#" id="nav-community" onclick="switchView('community-view', this); return false;" data-i18n="nav_community">Community</a>
+                    <a href="learn.html" data-i18n="nav_learn">Vridhi Learn</a>
+                </div>
+                <div class="nav-right">
+                    <div class="account-dropdown-wrapper">
+                        <button class="account-btn" id="account-dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+                            <span>👤 Account ▾</span>
+                        </button>
+                        <div class="account-dropdown-menu" id="account-dropdown-menu">
+                            <div class="dropdown-item-header">
+                                <label for="lang-select">Language / भाषा</label>
+                                <select id="lang-select" class="lang-select" onchange="applyLanguage(this.value)" aria-label="Select Language">
+                                    <option value="en">🌐 English</option>
+                                    <option value="mr">🌐 मराठी</option>
+                                    <option value="hi">🌐 हिंदी</option>
+                                </select>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <button id="update-income-btn" class="dropdown-item-btn update-btn" data-i18n="update_income">
+                                💵 Update Income
+                            </button>
+                            <button id="logout-btn" class="dropdown-item-btn logout-btn" data-i18n="sign_out">
+                                🚪 Sign Out
+                            </button>
+                        </div>
+                    </div>
+                    <button class="nav-toggle" id="nav-toggle-btn" aria-label="Toggle navigation">&#9776;</button>
+                </div>
+            </nav>
+
+            <div class="dashboard-wrapper">
+                <!-- Dashboard View -->
+                <div id="dashboard-view" class="view-section active">
+                    <div id="dashboard-content">
+                        <!-- Rendered by dashboard.js -->
+                    </div>
+                </div>
+
+                <!-- Monthly Financial Report View (Phase 3) -->
+                <div id="report-view" class="view-section">
+                    <div class="report-view-wrapper">
+                        <div class="report-top-nav no-print">
+                            <button type="button" class="report-back-btn" onclick="window.switchView('dashboard-view')">
+                                <span data-i18n="back_to_dashboard">← Back to Dashboard</span>
+                            </button>
+                            <div class="report-action-group">
+                                <button type="button" id="btn-email-report" class="report-btn-secondary" onclick="window.emailFinancialReport()">
+                                    <span data-i18n="email_report">📧 Email Me Report</span>
+                                </button>
+                                <button type="button" id="btn-download-pdf" class="report-btn-primary" onclick="window.downloadFinancialPlanPDF()">
+                                    <span data-i18n="download_financial_plan">📥 Download Financial Plan</span>
+                                </button>
+                                <button type="button" class="report-btn-secondary" onclick="window.printFinancialReport()">
+                                    <span data-i18n="print_report">🖨️ Print Report</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div id="financial-report-content">
+                            <!-- Injected dynamically by financialReport.js -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Simulator View (Phase 1) -->
+                <div id="simulator-view" class="view-section">
+                    <div class="sim-header-container">
+                        <div>
+                            <h2 data-i18n="simulator_title">What-If Financial Simulator</h2>
+                            <p class="subtitle" style="margin-bottom: 0; text-align: left;" data-i18n="simulator_subtitle">Simulate hypothetical financial changes and immediately visualize their impact on your savings, emergency fund, and goals.</p>
+                        </div>
+                        <button id="btn-reset-simulator" class="action-btn" style="background: #ffffff; color: #1e293b !important; border: 1px solid #cbd5e1; font-weight: 600; padding: 8px 16px; border-radius: 8px; cursor: pointer;" data-i18n="reset_simulation">🔄 Reset Simulation</button>
+                    </div>
+
+                    <!-- Educational Disclaimer Banner -->
+                    <div class="investments-disclaimer-banner" style="margin: 15px 0 25px 0;">
+                        <span data-i18n="simulator_disclaimer">💡 This simulator is for educational planning only. Changes made here are hypothetical and do not update your actual financial profile.</span>
+                    </div>
+
+                    <!-- Simulator Main Grid -->
+                    <div class="sim-grid-layout">
+                        <!-- Left Column: Controls & Presets -->
+                        <div class="sim-column">
+                            <!-- Baseline Summary Card -->
+                            <div class="sim-card">
+                                <h3 class="sim-card-title" data-i18n="current_financial_situation">Current Financial Baseline</h3>
+                                <div class="sim-baseline-summary">
+                                    <div class="sim-base-stat">
+                                        <span data-i18n="monthly_income_label">Monthly Income</span>
+                                        <strong id="sim-base-income">₹0</strong>
+                                    </div>
+                                    <div class="sim-base-stat">
+                                        <span data-i18n="essential_expenses">Essential Expenses</span>
+                                        <strong id="sim-base-expenses">₹0</strong>
+                                    </div>
+                                    <div class="sim-base-stat">
+                                        <span data-i18n="current_savings">Current Savings</span>
+                                        <strong id="sim-base-savings">₹0</strong>
+                                    </div>
+                                    <div class="sim-base-stat">
+                                        <span data-i18n="existing_debt">Existing Debt</span>
+                                        <strong id="sim-base-debt">₹0</strong>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Simulator Form Inputs -->
+                            <div class="sim-card">
+                                <h3 class="sim-card-title" data-i18n="what_if_controls">What-If Scenarios & Controls</h3>
+                                <div class="sim-inputs-group">
+                                    <div class="input-group">
+                                        <label for="sim_income" data-i18n="sim_monthly_income">Simulated Monthly Income (₹)</label>
+                                        <input type="number" id="sim_income" min="0" step="500">
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="sim_expenses" data-i18n="sim_essential_expenses">Simulated Essential Expenses (₹)</label>
+                                        <input type="number" id="sim_expenses" min="0" step="500">
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="sim_savings" data-i18n="sim_current_savings">Simulated Current Savings (₹)</label>
+                                        <input type="number" id="sim_savings" min="0" step="1000">
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="sim_debt" data-i18n="sim_existing_debt">Simulated Existing Debt (₹)</label>
+                                        <input type="number" id="sim_debt" min="0" step="1000">
+                                    </div>
+                                </div>
+
+                                <!-- Quick Presets -->
+                                <div class="sim-presets-container">
+                                    <span style="font-size: 0.85rem; color: #666; font-weight: 600; display: block; margin-bottom: 8px;">Preset Shortcuts:</span>
+                                    <div class="sim-preset-buttons">
+                                        <button type="button" id="preset-income" class="sim-preset-btn" data-i18n="preset_income">📈 Increase Income (+10%)</button>
+                                        <button type="button" id="preset-expenses" class="sim-preset-btn" data-i18n="preset_expenses">📉 Reduce Expenses (-10%)</button>
+                                        <button type="button" id="preset-savings" class="sim-preset-btn" data-i18n="preset_savings">💰 Boost Savings (+₹5,000)</button>
+                                        <button type="button" id="preset-debt" class="sim-preset-btn" data-i18n="preset_debt">💳 Add Extra Debt (+₹20,000)</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: Results & Comparisons -->
+                        <div class="sim-column">
+                            <!-- Monthly Position Card -->
+                            <div class="sim-card">
+                                <h3 class="sim-card-title" data-i18n="monthly_position">Monthly Financial Position</h3>
+                                <div class="sim-results-grid">
+                                    <div class="sim-res-item">
+                                        <span data-i18n="monthly_income_label">Simulated Income</span>
+                                        <strong id="sim-res-income">₹0</strong>
+                                    </div>
+                                    <div class="sim-res-item">
+                                        <span data-i18n="essential_expenses">Simulated Expenses</span>
+                                        <strong id="sim-res-expenses">₹0</strong>
+                                    </div>
+                                    <div class="sim-res-item highlight">
+                                        <span data-i18n="available_amount">Available Monthly Savings</span>
+                                        <strong id="sim-res-available" style="color: var(--primary);">₹0</strong>
+                                    </div>
+                                    <div class="sim-res-item highlight">
+                                        <span data-i18n="monthly_difference">Monthly Difference</span>
+                                        <strong id="sim-res-diff">₹0 / mo</strong>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Emergency Fund Impact Card -->
+                            <div class="sim-card">
+                                <h3 class="sim-card-title" data-i18n="emergency_fund_impact">Emergency Fund Impact</h3>
+                                <div class="sim-ef-stats">
+                                    <div class="sim-ef-item">
+                                        <span data-i18n="target_3_months">3-Month Target</span>
+                                        <strong id="sim-ef-3mo">₹0</strong>
+                                    </div>
+                                    <div class="sim-ef-item">
+                                        <span data-i18n="target_6_months">6-Month Target</span>
+                                        <strong id="sim-ef-6mo">₹0</strong>
+                                    </div>
+                                    <div class="sim-ef-item">
+                                        <span data-i18n="expense_coverage">Expense Coverage</span>
+                                        <strong id="sim-ef-coverage">0 Months</strong>
+                                    </div>
+                                </div>
+                                <div style="margin-top: 12px; text-align: center;">
+                                    <span id="sim-ef-badge" class="sim-badge badge-warning">Calculating...</span>
+                                </div>
+                            </div>
+
+                            <!-- Scenario Comparison Table -->
+                            <div class="sim-card">
+                                <h3 class="sim-card-title" data-i18n="scenario_comparison">Scenario Comparison</h3>
+                                <table class="sim-comp-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Metric</th>
+                                            <th data-i18n="baseline">Baseline</th>
+                                            <th data-i18n="simulated">What-If Simulated</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td data-i18n="monthly_income_label">Monthly Income</td>
+                                            <td id="comp-base-income">₹0</td>
+                                            <td id="comp-sim-income">₹0</td>
+                                        </tr>
+                                        <tr>
+                                            <td data-i18n="essential_expenses">Essential Expenses</td>
+                                            <td id="comp-base-expenses">₹0</td>
+                                            <td id="comp-sim-expenses">₹0</td>
+                                        </tr>
+                                        <tr>
+                                            <td data-i18n="available_amount">Available Savings</td>
+                                            <td id="comp-base-available">₹0</td>
+                                            <td id="comp-sim-available">₹0</td>
+                                        </tr>
+                                        <tr>
+                                            <td data-i18n="current_savings">Current Savings</td>
+                                            <td id="comp-base-savings">₹0</td>
+                                            <td id="comp-sim-savings">₹0</td>
+                                        </tr>
+                                        <tr>
+                                            <td data-i18n="existing_debt">Existing Debt</td>
+                                            <td id="comp-base-debt">₹0</td>
+                                            <td id="comp-sim-debt">₹0</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Goal Timeline Impact Section -->
+                    <div class="sim-card" style="margin-top: 20px;">
+                        <h3 class="sim-card-title" data-i18n="goal_impact">Goal Timeline Impact</h3>
+                        <div id="sim-goals-impact-container">
+                            <p style="color: #888; font-size: 0.9rem; text-align: center; padding: 10px 0;">Loading active goals...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Goals View -->
+                <div id="goals-view" class="view-section">
+                    <div class="goals-header-container">
+                        <div>
+                            <h2 data-i18n="my_goals">My Financial Goals</h2>
+                            <p class="subtitle" style="margin-bottom: 0; text-align: left;" data-i18n="plan_track">Plan and track your financial milestones</p>
+                        </div>
+                        <button id="open-add-goal-btn" class="action-btn add-goal-btn" data-i18n="add_goal">+ Add Goal</button>
+                    </div>
+
+                    <!-- Active Goals Grid (State B: 1+ goals) -->
+                    <div id="goals-grid" class="goals-grid" style="display: none;">
+                        <!-- Goal cards injected dynamically -->
+                    </div>
+
+                    <!-- Goal Starter Empty State (State A: 0 goals) -->
+                    <div id="goals-empty-state" class="goals-empty-state-wrapper">
+                        <!-- 1. Large Hero Card -->
+                        <div class="goals-empty-hero-card">
+                            <div class="empty-hero-icon" aria-hidden="true">🎯</div>
+                            <h3 class="empty-hero-title" data-i18n="empty_goals_hero_title">Start Planning Your Financial Goals</h3>
+                            <p class="empty-hero-desc" data-i18n="empty_goals_hero_desc">You haven't added any financial goals yet. Set your first goal and let Vridhi help you plan, track, and stay on course.</p>
+                            <button type="button" id="hero-create-goal-btn" class="action-btn hero-create-btn" data-i18n="create_first_goal">+ Create Your First Goal</button>
+                        </div>
+
+                        <!-- 2. Popular Goals Section -->
+                        <div class="popular-goals-section">
+                            <h3 class="popular-goals-heading" data-i18n="popular_goals_title">Popular Goals to Get You Started</h3>
+                            <div class="popular-goals-grid">
+                                <!-- Card 1: Emergency Fund -->
+                                <div class="popular-goal-card">
+                                    <div class="popular-goal-header">
+                                        <span class="popular-goal-icon" aria-hidden="true">🛡️</span>
+                                        <h4 class="popular-goal-title" data-i18n="popular_emergency_title">Emergency Fund</h4>
+                                    </div>
+                                    <p class="popular-goal-desc" data-i18n="popular_emergency_desc">Build a safety cushion for unexpected expenses.</p>
+                                    <button type="button" class="popular-goal-btn" data-goal-type="Emergency Fund" data-i18n="create_goal_btn">Create Goal</button>
+                                </div>
+
+                                <!-- Card 2: Education -->
+                                <div class="popular-goal-card">
+                                    <div class="popular-goal-header">
+                                        <span class="popular-goal-icon" aria-hidden="true">🎓</span>
+                                        <h4 class="popular-goal-title" data-i18n="popular_education_title">Education</h4>
+                                    </div>
+                                    <p class="popular-goal-desc" data-i18n="popular_education_desc">Plan and save for your education or skill development.</p>
+                                    <button type="button" class="popular-goal-btn" data-goal-type="Education" data-i18n="create_goal_btn">Create Goal</button>
+                                </div>
+
+                                <!-- Card 3: Major Purchase -->
+                                <div class="popular-goal-card">
+                                    <div class="popular-goal-header">
+                                        <span class="popular-goal-icon" aria-hidden="true">🚗</span>
+                                        <h4 class="popular-goal-title" data-i18n="popular_purchase_title">Major Purchase</h4>
+                                    </div>
+                                    <p class="popular-goal-desc" data-i18n="popular_purchase_desc">Start planning for a car, home, or another major purchase.</p>
+                                    <button type="button" class="popular-goal-btn" data-goal-type="Major Purchase" data-i18n="create_goal_btn">Create Goal</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3. How Goal Planning Works Section -->
+                        <div class="how-it-works-section">
+                            <h3 class="how-it-works-heading" data-i18n="how_it_works_title">How Goal Planning Works</h3>
+                            <div class="how-it-works-grid">
+                                <div class="how-it-works-step">
+                                    <div class="step-badge">01</div>
+                                    <h4 class="step-title" data-i18n="step1_title">Set a Goal</h4>
+                                    <p class="step-desc" data-i18n="step1_desc">Choose what you want to achieve.</p>
+                                </div>
+                                <div class="how-it-works-step">
+                                    <div class="step-badge">02</div>
+                                    <h4 class="step-title" data-i18n="step2_title">Create a Plan</h4>
+                                    <p class="step-desc" data-i18n="step2_desc">Set your target amount and timeline.</p>
+                                </div>
+                                <div class="how-it-works-step">
+                                    <div class="step-badge">03</div>
+                                    <h4 class="step-title" data-i18n="step3_title">Track Progress</h4>
+                                    <p class="step-desc" data-i18n="step3_desc">Monitor your progress as you save.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Investments View (30% Wealth Generation Pillar) -->
+                <div id="investments-view" class="view-section">
+                    <div class="investments-header-container">
+                        <div>
+                            <h2 data-i18n="investments_title">Smart Investments (30% Wealth Generation Pillar)</h2>
+                            <p class="subtitle" style="margin-bottom: 0; text-align: left;" data-i18n="investments_subtitle">Educational guide on building long-term wealth through compounding and disciplined investing.</p>
+                        </div>
+                        <div class="search-bar-container">
+                            <input type="text" placeholder="Search funds or categories" class="investment-search">
+                            <button class="filter-btn" title="Search options">🔍</button>
+                        </div>
+                    </div>
+
+                    <!-- Educational Disclaimer Banner -->
+                    <div class="investments-disclaimer-banner">
+                        <span data-i18n="investments_disclaimer">⚠️ For financial literacy and educational guidance only. Not registered investment advice.</span>
+                    </div>
+
+                    <!-- Key Investment Principles Section -->
+                    <div class="investments-principles-container">
+                        <h3 class="principles-title" data-i18n="investments_key_principles">Key Educational Investment Principles</h3>
+                        <div class="principles-grid">
+                            <div class="principle-card">
+                                <div class="principle-icon">📈</div>
+                                <h4 data-i18n="inv_sip_title">Mutual Funds & SIPs</h4>
+                                <p data-i18n="inv_sip_desc">Systematic monthly investing harnesses the power of compounding and rupee-cost averaging.</p>
+                            </div>
+                            <div class="principle-card">
+                                <div class="principle-icon">📊</div>
+                                <h4 data-i18n="inv_index_title">Index Funds (Passive)</h4>
+                                <p data-i18n="inv_index_desc">Low-cost funds that replicate market indices like Nifty 50 for broad market growth.</p>
+                            </div>
+                            <div class="principle-card">
+                                <div class="principle-icon">🛡️</div>
+                                <h4 data-i18n="inv_ppf_title">PPF & Debt Instruments</h4>
+                                <p data-i18n="inv_ppf_desc">Government-backed instruments offering capital safety, fixed returns, and tax benefits.</p>
+                            </div>
+                            <div class="principle-card">
+                                <div class="principle-icon">🪙</div>
+                                <h4 data-i18n="inv_gold_title">Sovereign Gold Bonds & Gold</h4>
+                                <p data-i18n="inv_gold_desc">Hedge against inflation with sovereign guarantee and 2.5% annual interest.</p>
+                            </div>
+                            <div class="principle-card">
+                                <div class="principle-icon">⚖️</div>
+                                <h4 data-i18n="inv_risk_title">Risk vs. Return & Horizon</h4>
+                                <p data-i18n="inv_risk_desc">Equity for long-term (>5 yrs); Debt/Liquid for short-term (<3 yrs). Match investments with time horizon.</p>
+                            </div>
+                            <div class="principle-card">
+                                <div class="principle-icon">🌐</div>
+                                <h4 data-i18n="inv_diversification_title">Asset Diversification</h4>
+                                <p data-i18n="inv_diversification_desc">Don't put all eggs in one basket. Balance equity, debt, and gold to manage portfolio risk.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category Cards Explorer -->
+                    <h3 style="color: var(--secondary); margin-bottom: 15px; font-size: 1.15rem;" data-i18n="explore_investments">Explore Investment Categories</h3>
+                    <div class="investment-categories">
+                        <div class="inv-category-card" data-category="Large Cap"><div class="inv-icon">🏢</div><span>Large Cap</span></div>
+                        <div class="inv-category-card" data-category="Mid Cap"><div class="inv-icon">🏭</div><span>Mid Cap</span></div>
+                        <div class="inv-category-card" data-category="Multi Cap"><div class="inv-icon">🌐</div><span>Multi Cap</span></div>
+                        <div class="inv-category-card" data-category="Index Funds"><div class="inv-icon">📈</div><span>Index Funds</span></div>
+                        <div class="inv-category-card" data-category="PPF & Debt"><div class="inv-icon">🛡️</div><span>PPF & Debt</span></div>
+                        <div class="inv-category-card" data-category="Gold & SGBs"><div class="inv-icon">🥇</div><span>Gold & SGBs</span></div>
+                    </div>
+
+                    <button class="explore-all-btn">Explore all educational options &rarr;</button>
+
+                    <div id="fund-list-container" class="fund-list-container" style="display: none;">
+                        <h3 id="fund-list-title" class="fund-list-title">Top Options</h3>
+                        <div id="fund-list-items" class="fund-list-items"></div>
+                        <div class="fund-info-accordion">
+                            <button class="accordion-toggle" id="info-accordion-toggle">
+                                <span id="accordion-title">What is this option?</span>
+                                <span class="accordion-icon">&#9660;</span>
+                            </button>
+                            <div class="accordion-content" id="info-accordion-content">
+                                <p id="accordion-desc">Information about this category will appear here.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="explore-more-section">
+                        <h3 data-i18n="explore_more">Explore More</h3>
+                        <div class="explore-more-card">
+                            <div class="em-icon">🥇</div>
+                            <div class="em-details">
+                                <h4>Sovereign Gold Bonds & Digital Gold</h4>
+                                <p>Learn how gold protects purchasing power against inflation.</p>
+                            </div>
+                            <div class="em-arrow">&rarr;</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile View -->
+                <div id="profile-view" class="view-section">
+                    <div class="profile-header-container">
+                        <div>
+                            <h2 data-i18n="financial_profile">Financial Profile</h2>
+                            <p class="subtitle" style="margin-bottom: 0; text-align: left;" data-i18n="profile_subtitle">Manage your personal finances, track health metrics, and view real-time intelligence.</p>
+                        </div>
+                    </div>
+
+                    <div class="profile-two-column-layout">
+                        <!-- LEFT COLUMN -->
+                        <div class="profile-column profile-left-column">
+                            <!-- 1. Update Details Form Card -->
+                            <div class="chart-container profile-card">
+                                <h3 data-i18n="update_details">Update Details</h3>
+                                <form id="profile-form">
+                                    <div class="input-group">
+                                        <label for="prof_income" data-i18n="monthly_income_label">Monthly Income</label>
+                                        <input type="number" id="prof_income" name="monthly_income" min="0" required>
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="prof_expenses" data-i18n="essential_expenses">Essential Expenses</label>
+                                        <input type="number" id="prof_expenses" name="essential_expenses" min="0" required>
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="prof_savings" data-i18n="current_savings">Current Savings</label>
+                                        <input type="number" id="prof_savings" name="current_savings" min="0" required>
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="prof_debt" data-i18n="existing_debt">Existing Debt</label>
+                                        <input type="number" id="prof_debt" name="existing_debt" min="0" required>
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="prof_risk" data-i18n="risk_preference">Risk Preference</label>
+                                        <select id="prof_risk" name="risk_preference">
+                                            <option value="low" data-i18n="low_risk">Low Risk</option>
+                                            <option value="medium" data-i18n="medium_risk">Medium Risk</option>
+                                            <option value="high" data-i18n="high_risk">High Risk</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="login-btn" data-i18n="save_profile">Save Profile</button>
+                                </form>
+                            </div>
+
+                            <!-- 2. Financial Health Score Card -->
+                            <div class="chart-container profile-card">
+                                <h3 data-i18n="health_score">Financial Health Score</h3>
+                                <div id="health-score-display">
+                                    <p style="color: #666; text-align: center;">Calculating health score...</p>
+                                </div>
+                            </div>
+
+                            <!-- 3. Emergency Fund Calculator Card -->
+                            <div class="chart-container profile-card">
+                                <h3 data-i18n="emergency_fund">Emergency Fund Calculator</h3>
+                                <div id="emergency-fund-display">
+                                    <p data-i18n="update_profile_calc">Update profile to calculate.</p>
+                                </div>
+                            </div>
+
+                            <!-- 4. Email Notification Preferences Card (Phase 11) -->
+                            <div class="chart-container profile-card" id="email-preferences-card">
+                                <h3>📧 Email Notification Preferences</h3>
+                                <form id="email-preferences-form">
+                                    <div style="display: flex; flex-direction: column; gap: 12px; margin: 15px 0;">
+                                        <label style="display: flex; align-items: center; gap: 10px; font-size: 0.9rem; cursor: pointer;">
+                                            <input type="checkbox" id="pref_goal_notifications" checked>
+                                            <span><strong>Goal Created & Completion</strong> notifications</span>
+                                        </label>
+                                        <label style="display: flex; align-items: center; gap: 10px; font-size: 0.9rem; cursor: pointer;">
+                                            <input type="checkbox" id="pref_milestone_emails" checked>
+                                            <span><strong>Milestone Progress</strong> (25%, 50%, 75%) alerts</span>
+                                        </label>
+                                        <label style="display: flex; align-items: center; gap: 10px; font-size: 0.9rem; cursor: pointer;">
+                                            <input type="checkbox" id="pref_deadline_reminders" checked>
+                                            <span><strong>Goal Deadline</strong> 7-day advance reminders</span>
+                                        </label>
+                                        <label style="display: flex; align-items: center; gap: 10px; font-size: 0.9rem; cursor: pointer;">
+                                            <input type="checkbox" id="pref_monthly_reports" checked>
+                                            <span><strong>Monthly Financial Report</strong> summaries</span>
+                                        </label>
+                                        <label style="display: flex; align-items: center; gap: 10px; font-size: 0.9rem; cursor: pointer;">
+                                            <input type="checkbox" id="pref_quiz_emails" checked>
+                                            <span><strong>Quiz Results & Literacy</strong> updates</span>
+                                        </label>
+                                        <label style="display: flex; align-items: center; gap: 10px; font-size: 0.9rem; cursor: pointer;">
+                                            <input type="checkbox" id="pref_financial_alerts" checked>
+                                            <span><strong>Financial Health & Emergency</strong> alerts</span>
+                                        </label>
+                                    </div>
+                                    <button type="submit" id="save-pref-btn" class="login-btn" style="background: #0A2342; margin-top: 5px;">Update Preferences</button>
+                                    <div id="pref-msg" style="margin-top: 10px; font-size: 0.85rem; text-align: center;"></div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- RIGHT COLUMN -->
+                        <div class="profile-column profile-right-column">
+                            <!-- 1. Financial Snapshot Card -->
+                            <div class="chart-container profile-card" id="financial-snapshot-card">
+                                <h3 data-i18n="financial_snapshot_title">Financial Snapshot</h3>
+                                <div id="financial-snapshot-display">
+                                    <!-- Rendered dynamically by profile.js -->
+                                </div>
+                            </div>
+
+                            <!-- 2. Emergency Fund Progress Card -->
+                            <div class="chart-container profile-card" id="emergency-fund-progress-card">
+                                <h3 data-i18n="ef_progress_title">Emergency Fund Progress</h3>
+                                <div id="ef-progress-display">
+                                    <!-- Rendered dynamically by profile.js -->
+                                </div>
+                            </div>
+
+                            <!-- 3. Your Financial Priorities Card -->
+                            <div class="chart-container profile-card" id="financial-priorities-card">
+                                <h3 data-i18n="financial_priorities_title">Your Financial Priorities</h3>
+                                <div id="financial-priorities-display">
+                                    <!-- Rendered dynamically by profile.js -->
+                                </div>
+                            </div>
+
+                            <!-- 4. Health Score Breakdown Card -->
+                            <div class="chart-container profile-card" id="health-breakdown-card">
+                                <h3 data-i18n="health_breakdown_title">Health Score Breakdown</h3>
+                                <div id="health-breakdown-display">
+                                    <!-- Rendered dynamically by profile.js -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Community View -->
+                <div id="community-view" class="view-section">
+                    <h2 data-i18n="community">Community</h2>
+                    <div class="community-nav">
+                        <button class="com-btn active" onclick="switchCommunityTab('survey')" data-i18n="survey_tab">Survey</button>
+                        <button class="com-btn" onclick="switchCommunityTab('results')" data-i18n="results_tab">Results</button>
+                        <button class="com-btn" onclick="switchCommunityTab('feedback')" data-i18n="feedback_tab">Feedback</button>
+                        <button class="com-btn" onclick="switchCommunityTab('impact')" data-i18n="impact_tab">Impact Dashboard</button>
+                    </div>
+
+                    <div id="com-survey" class="com-view active">
+                        <div class="chart-container">
+                            <h3 data-i18n="awareness_survey">Financial Awareness Survey</h3>
+                            <form id="community-survey-form">
+                                <div class="input-group">
+                                    <label data-i18n="survey_type_label">Survey Type</label>
+                                    <select id="survey_type" name="survey_type">
+                                        <option value="before" data-i18n="before_vridhi">Before Vridhi</option>
+                                        <option value="after" data-i18n="after_vridhi">After Vridhi</option>
+                                    </select>
+                                </div>
+                                <div class="input-group"><label data-i18n="q1">1. Maintain a monthly budget?</label><select id="q1" name="maintains_budget"><option value="1" data-i18n="yes">Yes</option><option value="0" data-i18n="no">No</option></select></div>
+                                <div class="input-group"><label data-i18n="q2">2. Save money regularly?</label><select id="q2" name="saves_regularly"><option value="1" data-i18n="yes">Yes</option><option value="0" data-i18n="no">No</option></select></div>
+                                <div class="input-group"><label data-i18n="q3">3. Have an emergency fund?</label><select id="q3" name="has_emergency_fund"><option value="1" data-i18n="yes">Yes</option><option value="0" data-i18n="no">No</option></select></div>
+                                <div class="input-group"><label data-i18n="q4">4. Have a financial goal?</label><select id="q4" name="has_financial_goal"><option value="1" data-i18n="yes">Yes</option><option value="0" data-i18n="no">No</option></select></div>
+                                <div class="input-group"><label data-i18n="q5">5. Understand basic investments?</label><select id="q5" name="understands_investing"><option value="1" data-i18n="yes">Yes</option><option value="0" data-i18n="no">No</option></select></div>
+                                <div class="input-group"><label data-i18n="q6">6. Biggest financial difficulty?</label><input type="text" id="q6" name="biggest_difficulty"></div>
+                                <div class="input-group"><label data-i18n="q7">7. Rate financial awareness (1-10)</label><input type="range" id="q7" name="awareness_rating" min="1" max="10" value="5" oninput="document.getElementById('q7_val').innerText = this.value"><span id="q7_val">5</span></div>
+                                <button type="submit" class="login-btn" data-i18n="submit_survey">Submit Survey</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div id="com-results" class="com-view">
+                        <div class="chart-container">
+                            <h3 data-i18n="survey_results">Survey Results</h3>
+                            <canvas id="surveyChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div id="com-feedback" class="com-view">
+                        <div class="chart-container">
+                            <h3 data-i18n="feedback_heading">Feedback</h3>
+                            <form id="feedback-form">
+                                <div class="input-group"><label data-i18n="ease_of_use">Ease of Use (1-5)</label><input type="number" min="1" max="5" id="f_ease" name="ease_of_use" required></div>
+                                <div class="input-group"><label data-i18n="usefulness">Usefulness (1-5)</label><input type="number" min="1" max="5" id="f_useful" name="usefulness" required></div>
+                                <div class="input-group"><label data-i18n="most_useful_feature">Most Useful Feature</label>
+                                    <select id="f_feature" name="most_useful_feature">
+                                        <option>Dashboard</option>
+                                        <option>Goals</option>
+                                        <option>Investments</option>
+                                        <option>Learn</option>
+                                    </select>
+                                </div>
+                                <div class="input-group"><label data-i18n="suggestions">Suggestions</label><textarea id="f_suggestions" name="suggestions"></textarea></div>
+                                <div class="input-group"><label data-i18n="problems">Problems</label><textarea id="f_problems" name="problems"></textarea></div>
+                                <button type="submit" class="login-btn" data-i18n="submit_feedback">Submit Feedback</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div id="com-impact" class="com-view">
+                        <div class="chart-container">
+                            <h3 data-i18n="impact_metrics">Impact Metrics</h3>
+                            <div id="impact-dashboard">
+                                <p style="color: gray; text-align: center;">Loading impact data...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- End .dashboard-wrapper -->
+
+            <!-- Universal Vridhi Footer -->
+            <footer class="vridhi-footer" role="contentinfo">
+                <div class="footer-container">
+                    <!-- Top Multi-Column Grid -->
+                    <div class="footer-grid">
+                        
+                        <!-- Section 1: Brand Column -->
+                        <div class="footer-col footer-brand-col">
+                            <div class="footer-brand">
+                                <img src="/images/Vridhi_logo.jpeg" alt="Vridhi Logo" class="footer-logo-img" onerror="this.style.display='none'">
+                                <div class="footer-brand-title">
+                                    VRIDHI <span class="footer-brand-hindi">वृद्धि</span>
+                                </div>
+                            </div>
+                            <div class="footer-subtitle" data-i18n="footer_subtitle">
+                                Financial Allocation & Growth Platform
+                            </div>
+                            <p class="footer-tagline-lead" data-i18n="footer_tagline_lead">
+                                Plan your money. Build your future.
+                            </p>
+                            <p class="footer-description" data-i18n="footer_desc">
+                                Vridhi helps users understand, plan, and organize their finances through structured financial tools and educational resources.
+                            </p>
+                        </div>
+
+                        <!-- Section 2: Platform Links -->
+                        <div class="footer-col">
+                            <h4 class="footer-col-title" data-i18n="footer_platform_title">Platform</h4>
+                            <ul class="footer-links">
+                                <li><a href="/index.html#dashboard" class="footer-nav-link" data-route="dashboard-view" data-i18n="nav_dashboard">Dashboard</a></li>
+                                <li><a href="/index.html#simulator" class="footer-nav-link" data-route="simulator-view" data-i18n="footer_financial_plan">Financial Plan</a></li>
+                                <li><a href="/index.html#goals" class="footer-nav-link" data-route="goals-view" data-i18n="nav_goals">My Goals</a></li>
+                                <li><a href="/index.html#report" class="footer-nav-link" data-route="report-view" data-i18n="footer_monthly_report">Monthly Report</a></li>
+                            </ul>
+                        </div>
+
+                        <!-- Section 3: Learn Links -->
+                        <div class="footer-col">
+                            <h4 class="footer-col-title" data-i18n="footer_learn_title">Learn</h4>
+                            <ul class="footer-links">
+                                <li><a href="/learn.html" class="footer-learn-link" data-i18n="nav_learn">Vridhi Learn</a></li>
+                                <li><a href="/learn.html#video-courses" class="footer-learn-link" data-i18n="video_courses_title">Video Crash Courses</a></li>
+                                <li><a href="/learn.html#research-reports-heading" class="footer-learn-link" data-i18n="research_reports_title">Research & Reports</a></li>
+                                <li><a href="/learn.html#quiz-heading" class="footer-learn-link" data-i18n="quiz_title">Financial Quiz</a></li>
+                            </ul>
+                        </div>
+
+                        <!-- Section 4: Support & Legal Links -->
+                        <div class="footer-col">
+                            <h4 class="footer-col-title" data-i18n="footer_support_legal_title">Support & Legal</h4>
+                            <ul class="footer-links">
+                                <li><a href="/index.html#community" class="footer-support-link" data-route="community-view" data-i18n="footer_help_support">Help / Support</a></li>
+                                <li><a href="#terms-panel" class="footer-terms-trigger" data-i18n="footer_faq">FAQ</a></li>
+                                <li><a href="#terms-panel" class="footer-terms-trigger" data-i18n="footer_privacy_policy">Privacy Policy</a></li>
+                                <li><a href="#terms-panel" class="footer-terms-trigger" data-i18n="terms">Terms of Use</a></li>
+                                <li><a href="#footer-disclaimer" class="footer-disclaimer-link" data-i18n="footer_disclaimer_link">Disclaimer</a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <!-- Financial Disclaimer Section -->
+                    <div class="footer-disclaimer" id="footer-disclaimer" role="note" aria-label="Financial Disclaimer">
+                        <div class="disclaimer-header">
+                            <span class="disclaimer-icon">⚖️</span>
+                            <strong data-i18n="footer_disclaimer_title">Financial Disclaimer:</strong>
+                        </div>
+                        <p data-i18n="footer_disclaimer_text">
+                            Vridhi provides financial education and planning tools for informational purposes only. The information presented does not constitute financial, investment, tax, or legal advice. Users should consider their individual circumstances and consult a qualified professional before making financial decisions.
+                        </p>
+                    </div>
+
+                    <!-- Bottom Footer Bar -->
+                    <div class="footer-bottom">
+                        <div class="footer-copyright">
+                            &copy; 2026 Vridhi. <span data-i18n="footer_all_rights">All rights reserved.</span>
+                        </div>
+                        <div class="footer-motto">
+                            <span>Plan</span> &bull; <span>Allocate</span> &bull; <span>Grow</span>
+                        </div>
+                        <div class="footer-social-links" aria-label="Social and developer links">
+                            <a href="https://github.com/Sujal-Beral/Vridhi-College_project-" target="_blank" rel="noopener noreferrer" class="footer-social-icon" aria-label="Vridhi GitHub Repository" title="GitHub">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                            </a>
+                            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="footer-social-icon" aria-label="LinkedIn" title="LinkedIn">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                            </a>
+                            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="footer-social-icon" aria-label="Instagram" title="Instagram">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+    </div>
+
+    <!-- Modals -->
+    <div id="goal-modal-overlay" class="modal-overlay">
+        <div class="goal-modal" style="width: 480px; max-width: 92vw;">
+            <div class="modal-header">
+                <h3 data-i18n="add_new_goal">Add New Goal</h3>
+                <button id="close-goal-modal" class="close-btn">&times;</button>
+            </div>
+            <form id="add-goal-form">
+                <div class="input-group">
+                    <label for="goal_name" data-i18n="goal_name">Goal Name</label>
+                    <input type="text" id="goal_name" placeholder="E.g. Emergency Fund, Laptop" required>
+                </div>
+                <div class="input-group">
+                    <label for="goal_target" data-i18n="target_amount">Target Amount (₹)</label>
+                    <input type="number" id="goal_target" min="1" placeholder="E.g. 100000" required>
+                </div>
+                <div class="input-group">
+                    <label for="goal_saved" data-i18n="already_saved">Already Saved Amount (₹)</label>
+                    <input type="number" id="goal_saved" min="0" placeholder="E.g. 15000 (Optional, default 0)">
+                </div>
+                <div class="input-group">
+                    <label for="goal_deadline" data-i18n="target_deadline">Target Deadline (Optional)</label>
+                    <input type="date" id="goal_deadline">
+                </div>
+                <div class="input-group">
+                    <label for="goal_allocation" data-i18n="monthly_allocation">Planned Monthly Allocation</label>
+                    <div class="input-row" style="gap: 10px;">
+                        <input type="number" id="goal_allocation" min="1" placeholder="E.g. 5000 or 10" required style="flex: 2;">
+                        <select id="allocation_type" style="flex: 1;">
+                            <option value="amount">₹ (Fixed)</option>
+                            <option value="percent">% of Income</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Real-time Smart Goal Analysis Box -->
+                <div id="smart-goal-analysis-box" class="smart-analysis-box" style="display: none;"></div>
+
+                <button type="submit" class="login-btn" data-i18n="save_goal">Save Goal</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="income-modal-overlay" class="modal-overlay">
+        <div class="goal-modal">
+            <div class="modal-header">
+                <h3 data-i18n="update_income_modal">Update Income</h3>
+                <button id="close-income-modal" class="close-btn">&times;</button>
+            </div>
+            <form id="update-income-form">
+                <div class="input-group">
+                    <label data-i18n="new_income">New Monthly Income (₹)</label>
+                    <input type="number" id="new_income" required>
+                </div>
+                <button type="submit" class="login-btn" data-i18n="update_btn">Update</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="overlay"></div>
+    <div id="terms-panel">
+        <div class="terms-header">
+            <h5>Terms of Use, Privacy Policy & FAQ</h5>
+            <button id="close-terms">&times;</button>
+        </div>
+        <div class="terms-body">
+            <h5 style="color: var(--secondary); margin-bottom: 6px; font-weight: 700;">1. Terms of Use</h5>
+            <p>Vridhi (वृद्धि) is an educational financial planning and literacy platform designed to help users budget, track milestones, and simulate hypothetical scenarios. By using this service, you acknowledge that all figures, scores, and projections are educational estimates and do not constitute certified financial or investment advisory.</p>
+            
+            <h5 style="color: var(--secondary); margin-top: 14px; margin-bottom: 6px; font-weight: 700;">2. Privacy Policy</h5>
+            <p>Your personal information, financial data, and survey scores are securely associated with your authenticated session. Vridhi adheres to strict data privacy principles — we do not sell, monetize, or expose individual financial metrics to third-party commercial entities.</p>
+
+            <h5 style="color: var(--secondary); margin-top: 14px; margin-bottom: 6px; font-weight: 700;">3. Frequently Asked Questions (FAQ)</h5>
+            <p style="margin-bottom: 6px;"><strong>Q: What is the 20-20-30-30 framework?</strong><br>A: It is Vridhi's educational allocation model: 20% Secure Savings, 20% Emergency Shield, 30% Home & Essentials, and 30% Wealth Generation.</p>
+            <p style="margin-bottom: 6px;"><strong>Q: How do I generate my Monthly Financial Plan?</strong><br>A: From the Dashboard, click "View Report" or "Download Plan" on the My Financial Report card to view and export your A4 PDF.</p>
+            <p><strong>Q: Is my emergency fund coverage calculated automatically?</strong><br>A: Yes! Vridhi evaluates your current savings against 3-month and 6-month essential expense targets in real time.</p>
+        </div>
+    </div>
+
+    <!-- Script imports -->
+    <script src="/js/i18n.js"></script>
+    <script src="/js/navigation.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/simulator.js"></script>
+    <script src="/js/dashboard.js"></script>
+    <script src="/js/charts.js"></script>
+    <script src="/js/goals.js"></script>
+    <script src="/js/investments.js"></script>
+    <script src="/js/profile.js"></script>
+    <script src="/js/survey.js"></script>
+    <script src="/js/community.js"></script>
+    <script src="/js/financialReport.js"></script>
+    
+    <script>
+        function switchAuthTab(tab) {
+            document.querySelectorAll('#login-section .tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('#login-section .tab-content').forEach(c => c.classList.remove('active'));
+            if(tab === 'login') {
+                document.querySelectorAll('#login-section .tab-btn')[0].classList.add('active');
+                document.getElementById('login-form').classList.add('active');
+            } else {
+                document.querySelectorAll('#login-section .tab-btn')[1].classList.add('active');
+                document.getElementById('register-form').classList.add('active');
+            }
+        }
+        function switchCommunityTab(tab) {
+            document.querySelectorAll('.com-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.com-view').forEach(c => c.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('com-' + tab).classList.add('active');
+            if(tab === 'results' && window.renderSurveyCharts) window.renderSurveyCharts();
+            if(tab === 'impact' && window.renderImpactCharts) window.renderImpactCharts();
+        }
+    </script>
+</body>
+</html>

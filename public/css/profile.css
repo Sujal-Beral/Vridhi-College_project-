@@ -1,0 +1,380 @@
+/* ==========================================================================
+   public/css/profile.css
+   Vridhi (वृद्धि) — Financial Profile Styles & Balanced Two-Column Layout
+   ========================================================================== */
+
+/* Profile view wrapper — centered, full horizontal utilization */
+#profile-view {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 0 36px;
+    width: 100%;
+}
+
+.profile-header-container {
+    margin-bottom: 24px;
+}
+
+#profile-view h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--secondary, #0A2342);
+    margin-bottom: 4px;
+}
+
+/* ---- Two-Column Responsive Layout ---- */
+.profile-two-column-layout {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 24px;
+    align-items: start;
+    width: 100%;
+}
+
+.profile-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Card Container Styles */
+.profile-card {
+    background: #FFFFFF;
+    border-radius: 12px;
+    padding: 22px 24px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.profile-card:hover {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.profile-card h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--secondary, #0A2342);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #f1f5f9;
+}
+
+/* ---- Form inputs ---- */
+#profile-view .input-group {
+    margin-bottom: 14px;
+}
+
+#profile-view .input-group label {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 6px;
+}
+
+#profile-view .input-group input,
+#profile-view .input-group select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border, #dde1e7);
+    border-radius: 8px;
+    font-size: 0.92rem;
+    color: var(--text-main);
+    background: #fff;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#profile-view .input-group input:focus,
+#profile-view .input-group select:focus {
+    outline: none;
+    border-color: var(--primary, #50C878);
+    box-shadow: 0 0 0 3px rgba(80, 200, 120, 0.15);
+}
+
+/* ---- Health Score Display ---- */
+#health-score-display {
+    font-size: 1rem;
+    color: var(--text-main);
+}
+
+.health-score-circle {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.health-score-circle span {
+    background: #fff;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: var(--secondary, #0A2342);
+    line-height: 1;
+}
+
+.health-details {
+    margin-top: 6px;
+}
+
+.health-details h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--secondary, #0A2342);
+    margin-top: 12px;
+    margin-bottom: 6px;
+}
+
+.health-details ul {
+    padding-left: 1.25rem;
+    margin: 0.25rem 0 0.5rem;
+    list-style: disc;
+}
+
+.health-details ul li {
+    font-size: 0.88rem;
+    line-height: 1.45;
+    color: #475569;
+    margin-bottom: 4px;
+}
+
+/* ---- Emergency Fund Card (Left column) ---- */
+.ef-card {
+    background: #f8fafc;
+    padding: 16px 18px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    border-left-width: 5px;
+    border-left-style: solid;
+}
+
+.ef-card h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--secondary, #0A2342);
+}
+
+.ef-card p {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: #475569;
+    margin-bottom: 5px;
+}
+
+.ef-card small {
+    font-size: 0.78rem;
+    color: #94a3b8;
+    display: block;
+    margin-top: 8px;
+    line-height: 1.4;
+}
+
+/* ==========================================================================
+   RIGHT COLUMN CARDS
+   ========================================================================== */
+
+/* 1. Financial Snapshot Card */
+.snapshot-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.snapshot-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    background: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+}
+
+.snapshot-row:hover {
+    background: #f1f5f9;
+}
+
+.snapshot-row.highlight-surplus,
+.snapshot-row.highlight-rate {
+    background: #f0fdf4;
+    border-color: #86efac;
+}
+
+.snapshot-label {
+    color: #64748b;
+    font-weight: 600;
+}
+
+.snapshot-val {
+    color: var(--secondary, #0A2342);
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+/* 2. Emergency Fund Progress Card */
+.ef-progress-box {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.ef-progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.ef-progress-amounts {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--secondary, #0A2342);
+}
+
+.ef-progress-pct {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--primary, #50C878);
+    background: var(--primary-light, #d0f5e0);
+    padding: 2px 8px;
+    border-radius: 12px;
+}
+
+.ef-progress-track {
+    width: 100%;
+    height: 12px;
+    background: #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 4px 0 6px;
+}
+
+.ef-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary, #50C878), #3dab61);
+    border-radius: 8px;
+    transition: width 0.5s ease-in-out;
+}
+
+.ef-status-msg {
+    font-size: 0.86rem;
+    color: #475569;
+    font-weight: 600;
+    line-height: 1.45;
+}
+
+/* 3. Financial Priorities Card */
+.priorities-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.priority-item {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid var(--primary, #50C878);
+    border-radius: 8px;
+    padding: 12px 14px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.priority-item:hover {
+    transform: translateX(2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.priority-title {
+    font-weight: 700;
+    color: var(--secondary, #0A2342);
+    font-size: 0.92rem;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.priority-desc {
+    font-size: 0.84rem;
+    color: #475569;
+    line-height: 1.45;
+    margin: 0;
+}
+
+/* 4. Health Score Components Breakdown */
+.health-breakdown-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.breakdown-item {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.breakdown-label {
+    font-size: 0.78rem;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.breakdown-badge {
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 6px;
+    display: inline-block;
+    width: fit-content;
+}
+
+.breakdown-badge.good {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.breakdown-badge.warning {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.breakdown-badge.danger {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+/* ---- Responsive Layout ---- */
+@media (max-width: 960px) {
+    .profile-two-column-layout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .profile-card {
+        padding: 18px 16px;
+    }
+    .health-breakdown-grid {
+        grid-template-columns: 1fr;
+    }
+}

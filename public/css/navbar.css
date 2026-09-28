@@ -1,0 +1,318 @@
+/* --- Universal Navigation Bar --- */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: var(--secondary, #0A2342);
+    padding: 0 28px;
+    height: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+    z-index: 1000;
+}
+
+/* --- Brand & Tagline --- */
+.nav-brand {
+    color: var(--primary, #50C878);
+    font-size: 1.65rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: baseline;
+    text-decoration: none;
+}
+
+.nav-tagline {
+    font-size: 0.82rem;
+    color: #94a3b8;
+    margin-left: 0.5rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+/* --- Main Navigation Links (Desktop: Always Visible) --- */
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    flex: 1;
+    justify-content: center;
+}
+
+.nav-links a {
+    color: #cbd5e1;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.2s ease, border-color 0.2s ease;
+    padding: 6px 0;
+    border-bottom: 2px solid transparent;
+}
+
+.nav-links a:hover {
+    color: #ffffff;
+}
+
+.nav-links a.active-link {
+    color: #22c55e;
+    border-bottom: 2px solid #22c55e;
+    font-weight: 600;
+}
+
+/* --- Right-side Controls Container --- */
+.nav-right {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+/* --- Account Dropdown Wrapper & Button --- */
+.account-dropdown-wrapper {
+    position: relative;
+}
+
+.account-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-light, #FFFDF5);
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.account-btn:hover,
+.account-btn[aria-expanded="true"] {
+    background: rgba(80, 200, 120, 0.15);
+    border-color: var(--primary, #50C878);
+    color: var(--primary, #50C878);
+}
+
+/* --- Account Dropdown Menu Card --- */
+.account-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: 230px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    padding: 12px;
+    z-index: 1010;
+    animation: fadeIn 0.2s ease-in-out;
+    border: 1px solid #edf0f4;
+}
+
+.account-dropdown-menu.show {
+    display: block;
+}
+
+.dropdown-item-header {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 4px 6px 8px;
+}
+
+.dropdown-item-header label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #666;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background: #edf0f4;
+    margin: 8px 0;
+}
+
+/* --- Dropdown Action Buttons --- */
+.dropdown-item-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: transparent;
+    color: var(--secondary, #0A2342);
+    margin-bottom: 6px;
+}
+
+.dropdown-item-btn:last-child {
+    margin-bottom: 0;
+}
+
+.dropdown-item-btn.update-btn {
+    background: #f4fbf6 !important;
+    color: #1b5e20 !important;
+    border: 1px solid #c8e6c9 !important;
+}
+
+.dropdown-item-btn.update-btn:hover {
+    background: #e8f5e9 !important;
+    color: #1b5e20 !important;
+}
+
+.dropdown-item-btn.logout-btn {
+    background: #fff5f5 !important;
+    color: #c62828 !important;
+    border: 1px solid #ffcdd2 !important;
+}
+
+.dropdown-item-btn.logout-btn:hover {
+    background: #ffebee !important;
+    color: #b71c1c !important;
+}
+
+/* --- Dropdown Language Selector --- */
+.account-dropdown-menu .lang-select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1.5px solid #dde1e7;
+    background: #ffffff;
+    color: var(--secondary, #0A2342);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.account-dropdown-menu .lang-select:hover,
+.account-dropdown-menu .lang-select:focus {
+    border-color: var(--primary, #50C878);
+}
+
+.account-dropdown-menu .lang-select option {
+    background: #ffffff;
+    color: var(--secondary, #0A2342);
+}
+
+/* --- Mobile Toggle Hamburger Button (Desktop: HIDDEN) --- */
+.nav-toggle,
+#nav-toggle-btn {
+    display: none;
+    background: transparent;
+    border: none;
+    color: var(--text-light, #FFFDF5);
+    font-size: 1.6rem;
+    cursor: pointer;
+    padding: 4px;
+    line-height: 1;
+}
+
+/* ================================================================
+   LAPTOP / COMPACT DESKTOP (769px – 1200px)
+   ================================================================ */
+@media screen and (min-width: 769px) and (max-width: 1200px) {
+    .navbar {
+        padding: 0 18px;
+        gap: 1rem;
+    }
+
+    .nav-links {
+        display: flex !important;
+        gap: 1.1rem;
+        position: static;
+        background: transparent;
+        padding: 0;
+        box-shadow: none;
+        width: auto;
+    }
+
+    .nav-links a {
+        font-size: 0.88rem;
+    }
+
+    .nav-toggle,
+    #nav-toggle-btn {
+        display: none !important;
+    }
+}
+
+/* ================================================================
+   MOBILE & SMALL TABLETS (<= 768px)
+   ================================================================ */
+@media screen and (max-width: 768px) {
+    .navbar {
+        padding: 0 14px;
+        height: 60px;
+    }
+
+    .nav-brand {
+        font-size: 1.35rem;
+    }
+
+    .nav-tagline {
+        display: none;
+    }
+
+    .nav-toggle,
+    #nav-toggle-btn {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        background-color: var(--secondary, #0A2342);
+        padding: 16px 24px 20px;
+        z-index: 999;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        gap: 12px;
+        align-items: flex-start;
+    }
+
+    .nav-links.nav-open {
+        display: flex !important;
+    }
+
+    .nav-links a {
+        padding: 8px 0;
+        font-size: 1rem;
+        width: 100%;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .account-btn {
+        padding: 5px 9px;
+        font-size: 0.78rem;
+    }
+
+    .account-dropdown-menu {
+        width: 210px;
+        right: 0;
+    }
+}

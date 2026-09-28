@@ -1,0 +1,609 @@
+/* --- Dashboard Specific Styles --- */
+
+#dashboard-section.active {
+    display: block;
+}
+
+/* Offset for fixed navbar (64px tall) with generous comfortable breathing room */
+.dashboard-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 86px 24px 48px;
+    width: 100%;
+}
+
+/* ---- View sections inside dashboard wrapper ---- */
+.view-section {
+    display: none;
+}
+
+.view-section.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+/* ---- Dashboard Header ---- */
+
+.dashboard-header {
+    text-align: center;
+    margin-bottom: 24px;
+    padding: 6px 0;
+}
+
+.dashboard-header h2 {
+    color: var(--secondary);
+    font-size: 1.85rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.dashboard-header .total-income {
+    color: var(--primary);
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-top: 4px;
+}
+
+.dashboard-header p {
+    color: #666;
+    font-size: 0.85rem;
+    margin-top: 4px;
+}
+
+/* ---- Dashboard Allocation & Chart Two-Column Grid ---- */
+
+.dashboard-allocation-layout {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 1.5rem;
+    align-items: stretch;
+    margin-bottom: 24px;
+}
+
+/* 2x2 Grid for the Four Allocation Cards */
+.allocation-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    height: 100%;
+}
+
+.allocation-card {
+    background: #FFFFFF;
+    border-radius: 10px;
+    padding: 1.25rem 1rem;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border-top: 4px solid var(--primary);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 125px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.allocation-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.allocation-card h4 {
+    color: #555;
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.allocation-card .amount {
+    color: var(--secondary);
+    font-size: 1.45rem;
+    font-weight: 700;
+}
+
+.allocation-card > div:last-child {
+    font-size: 0.78rem;
+    color: #888;
+    margin-top: 4px;
+    line-height: 1.35;
+}
+
+/* ---- Allocation Chart Container Card (Right Column) ---- */
+
+.allocation-chart-container {
+    background: #FFFFFF;
+    border-radius: 10px;
+    padding: 1.25rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 270px;
+    height: 100%;
+}
+
+.allocation-chart-container h3 {
+    color: var(--secondary);
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    width: 100%;
+    text-align: center;
+}
+
+.chart-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 270px;
+    height: 220px;
+    margin: 0 auto;
+}
+
+/* ---- General Dashboard Layout for Widgets ---- */
+
+.dashboard-layout {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+    align-items: flex-start;
+}
+
+.summary-container {
+    flex: 1;
+    min-width: 260px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* ---- Goals Summary & Category Widget ---- */
+
+.category-widget {
+    background: rgba(212, 175, 55, 0.08);
+    border: 1px solid var(--accent);
+    border-radius: 10px;
+    padding: 20px;
+    flex: 1;
+    min-width: 260px;
+}
+
+.category-widget h3 {
+    color: var(--secondary);
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.category-widget p {
+    font-size: 0.9rem;
+    color: var(--text-main);
+    margin-bottom: 6px;
+    line-height: 1.5;
+}
+
+.widget-suggestions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+.suggestion-pill {
+    background: white;
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--secondary);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--border);
+}
+
+/* ================================================================
+   PERSONALIZED FINANCIAL TIPS (PHASE 1)
+   ================================================================ */
+.personalized-tips-container {
+    background: #FFFFFF;
+    border-radius: 12px;
+    padding: 22px 24px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    margin-top: 24px;
+    border-left: 4px solid var(--primary, #50C878);
+}
+
+.tips-section-title {
+    color: var(--secondary, #0A2342);
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.tip-card {
+    display: flex;
+    gap: 14px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 16px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.tip-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    border-color: var(--primary-light, #d0f5e0);
+}
+
+.tip-icon {
+    font-size: 1.6rem;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.tip-content h5 {
+    color: var(--secondary, #0A2342);
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.tip-content p {
+    color: #475569;
+    font-size: 0.85rem;
+    line-height: 1.45;
+    margin: 0;
+}
+
+/* ================================================================
+   WHAT-IF FINANCIAL SIMULATOR (PHASE 1)
+   ================================================================ */
+.sim-header-container,
+.simulator-header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.sim-header-container h2,
+.simulator-header-container h2 {
+    color: var(--secondary, #0A2342);
+    font-size: 1.65rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.simulator-disclaimer-banner {
+    background: #fffbeb;
+    border-left: 4px solid #f59e0b;
+    padding: 12px 18px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    color: #92400e;
+    font-size: 0.88rem;
+    font-weight: 500;
+    line-height: 1.45;
+}
+
+.sim-grid-layout,
+.simulator-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.25fr;
+    gap: 24px;
+    align-items: start;
+    margin-bottom: 24px;
+}
+
+@media (max-width: 900px) {
+    .sim-grid-layout,
+    .simulator-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.sim-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.sim-card {
+    background: #FFFFFF;
+    border-radius: 12px;
+    padding: 22px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+    border: 1px solid #f1f5f9;
+}
+
+.sim-card h3,
+.sim-card-title {
+    color: var(--secondary, #0A2342);
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    border-bottom: 1.5px solid #f1f5f9;
+    padding-bottom: 8px;
+}
+
+.sim-baseline-summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 8px;
+    padding: 14px;
+    background: #f8fafc;
+    border-radius: 8px;
+    border: 1px dashed #cbd5e1;
+}
+
+.sim-base-stat,
+.sim-baseline-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.sim-base-stat span,
+.sim-baseline-item span {
+    font-size: 0.78rem;
+    color: #64748b;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.sim-base-stat strong,
+.sim-baseline-item strong {
+    font-size: 1.05rem;
+    color: var(--secondary, #0A2342);
+}
+
+.sim-inputs-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.sim-presets-container {
+    padding-top: 12px;
+    border-top: 1px solid #f1f5f9;
+}
+
+.sim-preset-buttons,
+.sim-presets-bar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.sim-preset-btn {
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    color: var(--secondary, #0A2342);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.sim-preset-btn:hover {
+    background: var(--primary-light, #d0f5e0);
+    border-color: var(--primary, #50C878);
+    color: #065f46;
+}
+
+.sim-results-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.sim-res-item,
+.sim-result-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sim-res-item span,
+.sim-result-box span {
+    font-size: 0.78rem;
+    color: #64748b;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.sim-res-item strong,
+.sim-result-box strong {
+    font-size: 1.15rem;
+    color: var(--secondary, #0A2342);
+    display: block;
+}
+
+.sim-res-item.highlight {
+    background: #f0fdf4;
+    border-color: #bbf7d0;
+}
+
+.sim-diff-positive {
+    color: #16a34a !important;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.sim-diff-negative {
+    color: #dc2626 !important;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.sim-ef-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+}
+
+@media (max-width: 600px) {
+    .sim-ef-stats {
+        grid-template-columns: 1fr;
+    }
+}
+
+.sim-ef-item {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+}
+
+.sim-ef-item span {
+    font-size: 0.76rem;
+    color: #64748b;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.sim-ef-item strong {
+    font-size: 1.05rem;
+    color: var(--secondary, #0A2342);
+    display: block;
+}
+
+.sim-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.badge-success {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.badge-warning {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.badge-danger {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.badge-neutral {
+    background: #e2e8f0;
+    color: #475569;
+}
+
+/* Comparison Table */
+.sim-comp-table,
+.sim-comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 4px;
+    font-size: 0.88rem;
+}
+
+.sim-comp-table th,
+.sim-comparison-table th {
+    text-align: left;
+    padding: 10px 12px;
+    background: #f1f5f9;
+    color: var(--secondary, #0A2342);
+    font-weight: 700;
+    border-bottom: 2px solid #cbd5e1;
+}
+
+.sim-comp-table td,
+.sim-comparison-table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #334155;
+}
+
+.sim-comp-table tr:last-child td,
+.sim-comparison-table tr:last-child td {
+    border-bottom: none;
+}
+
+.comp-higher {
+    color: #16a34a;
+    font-weight: 700;
+}
+
+.comp-lower {
+    color: #dc2626;
+    font-weight: 700;
+}
+
+.comp-neutral {
+    color: var(--secondary, #0A2342);
+    font-weight: 600;
+}
+
+/* Goal Simulation Cards */
+.sim-goals-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.sim-goal-item {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 14px 16px;
+}
+
+.sim-goal-item.completed {
+    background: #f0fdf4;
+    border-color: #86efac;
+}
+
+.sim-goal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.sim-goal-header h4 {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--secondary, #0A2342);
+}
+
+.sim-goal-target {
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+.sim-goal-details {
+    font-size: 0.85rem;
+    color: #475569;
+    line-height: 1.5;
+}
+
+.sim-goal-diff {
+    margin-top: 4px;
+}

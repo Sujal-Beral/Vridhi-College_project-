@@ -1,0 +1,699 @@
+/* ==========================================================================
+   public/css/financialReport.css
+   Vridhi (वृद्धि) — Phase 3: Monthly Financial Report & Downloadable Plan Styles
+   ========================================================================== */
+
+/* --- 1. Dashboard "My Financial Report" Feature Card --- */
+.financial-report-card {
+    background: #FFFFFF;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-top: 20px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    border-left: 5px solid var(--primary, #50C878);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.financial-report-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.report-card-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+    min-width: 280px;
+}
+
+.report-card-icon {
+    font-size: 2rem;
+    background: var(--primary-light, #d0f5e0);
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.report-card-text h3 {
+    margin: 0 0 4px 0;
+    color: var(--secondary, #0A2342);
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.report-card-text p {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.88rem;
+    line-height: 1.4;
+}
+
+.report-card-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.report-btn-primary {
+    background-color: var(--primary, #50C878) !important;
+    color: #FFFFFF !important;
+    padding: 9px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(80, 200, 120, 0.3);
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.report-btn-primary:hover {
+    background-color: var(--primary-hover, #3dab61) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(80, 200, 120, 0.4);
+}
+
+.report-btn-secondary {
+    background-color: #FFFFFF !important;
+    color: var(--secondary, #0A2342) !important;
+    border: 1.5px solid #cbd5e1 !important;
+    padding: 9px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.report-btn-secondary:hover {
+    background-color: #f8fafc !important;
+    border-color: #94a3b8 !important;
+    transform: translateY(-1px);
+}
+
+/* --- 2. In-App Report View & Top Actions --- */
+.report-view-wrapper {
+    max-width: 960px;
+    margin: 0 auto;
+    padding-bottom: 40px;
+}
+
+.report-top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.report-back-btn {
+    background: #FFFFFF !important;
+    color: var(--secondary, #0A2342) !important;
+    border: 1px solid #cbd5e1 !important;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.report-back-btn:hover {
+    background: #f1f5f9 !important;
+    border-color: #94a3b8 !important;
+}
+
+.report-action-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* --- 3. Printable Report Sheet / Document Container --- */
+.report-sheet {
+    background: #FFFFFF;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+    border: 1px solid #e2e8f0;
+    color: #1e293b;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* Header */
+.report-header-section {
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 24px;
+    margin-bottom: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.report-brand-title {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: var(--secondary, #0A2342);
+    margin: 0 0 4px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.report-brand-tagline {
+    font-size: 1.15rem;
+    color: var(--primary, #50C878);
+    font-weight: 700;
+}
+
+.report-doc-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #334155;
+    margin: 0 0 6px 0;
+}
+
+.report-date-badge {
+    display: inline-block;
+    background: var(--primary-light, #d0f5e0);
+    color: #065f46;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+.report-meta-info {
+    text-align: right;
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+.report-meta-info strong {
+    color: var(--secondary, #0A2342);
+    font-size: 1.05rem;
+    display: block;
+    margin-top: 2px;
+}
+
+/* Section Title */
+.report-section-block {
+    margin-bottom: 30px;
+    page-break-inside: avoid;
+}
+
+.report-section-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--secondary, #0A2342);
+    margin: 0 0 14px 0;
+    padding-bottom: 6px;
+    border-bottom: 1.5px solid #cbd5e1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 1. Financial Overview Table / Grid */
+.report-overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.report-stat-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 14px 16px;
+    text-align: left;
+}
+
+.report-stat-box.highlight {
+    background: #f0fdf4;
+    border-color: #86efac;
+}
+
+.report-stat-label {
+    font-size: 0.82rem;
+    color: #64748b;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.report-stat-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--secondary, #0A2342);
+}
+
+.report-stat-box.highlight .report-stat-value {
+    color: #15803d;
+}
+
+/* 2. 20-20-30-30 Allocation Cards */
+.report-allocation-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.report-alloc-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 14px;
+    text-align: center;
+    border-top: 4px solid var(--primary, #50C878);
+}
+
+.report-alloc-card.p-secure { border-top-color: #4CAF50; }
+.report-alloc-card.p-emergency { border-top-color: #FF9800; }
+.report-alloc-card.p-home { border-top-color: #2196F3; }
+.report-alloc-card.p-wealth { border-top-color: #9C27B0; }
+
+.report-alloc-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #475569;
+    margin-bottom: 4px;
+}
+
+.report-alloc-amount {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--secondary, #0A2342);
+}
+
+.report-alloc-desc {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    margin-top: 4px;
+}
+
+/* 3. Emergency Fund Analysis */
+.report-ef-container {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 18px 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    align-items: center;
+}
+
+.report-ef-item {
+    font-size: 0.9rem;
+}
+
+.report-ef-item span {
+    color: #64748b;
+    display: block;
+    font-size: 0.82rem;
+}
+
+.report-ef-item strong {
+    color: var(--secondary, #0A2342);
+    font-size: 1.15rem;
+}
+
+.report-ef-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.report-ef-badge.sufficient {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.report-ef-badge.partial {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.report-ef-badge.attention {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+/* 4. Financial Health Score */
+.report-health-layout {
+    display: grid;
+    grid-template-columns: 200px 1fr 1fr;
+    gap: 20px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.report-health-circle-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-right: 1px solid #e2e8f0;
+    padding-right: 16px;
+}
+
+.report-score-number {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--primary, #50C878);
+    line-height: 1;
+}
+
+.report-score-label {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-top: 4px;
+}
+
+.report-health-col h5 {
+    margin: 0 0 8px 0;
+    font-size: 0.9rem;
+    color: var(--secondary, #0A2342);
+}
+
+.report-health-col ul {
+    margin: 0;
+    padding-left: 18px;
+    font-size: 0.85rem;
+    color: #475569;
+}
+
+.report-health-col ul li {
+    margin-bottom: 4px;
+}
+
+/* 5. Goals Summary & Progress Visualization */
+.report-goals-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.report-goal-row {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 14px 16px;
+}
+
+.report-goal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.report-goal-name {
+    font-weight: 700;
+    color: var(--secondary, #0A2342);
+    font-size: 1rem;
+}
+
+.report-goal-amounts {
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+.report-progress-track {
+    width: 100%;
+    height: 10px;
+    background: #e2e8f0;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 6px;
+}
+
+.report-progress-fill {
+    height: 100%;
+    background: var(--primary, #50C878);
+    border-radius: 6px;
+    transition: width 0.4s ease;
+}
+
+.report-goal-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+.report-empty-state {
+    padding: 24px;
+    text-align: center;
+    color: #64748b;
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+/* 6. Personalized Financial Insights */
+.report-tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px;
+}
+
+.report-tip-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid var(--primary, #50C878);
+    border-radius: 8px;
+    padding: 14px;
+    display: flex;
+    gap: 12px;
+}
+
+.report-tip-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.report-tip-content h5 {
+    margin: 0 0 4px 0;
+    color: var(--secondary, #0A2342);
+    font-size: 0.9rem;
+}
+
+.report-tip-content p {
+    margin: 0;
+    font-size: 0.82rem;
+    color: #475569;
+    line-height: 1.4;
+}
+
+/* 7. Financial Learning / Quiz Section */
+.report-learning-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 16px 20px;
+}
+
+.report-quiz-stats {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 16px;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.report-quiz-stat-item span {
+    font-size: 0.82rem;
+    color: #64748b;
+    display: block;
+}
+
+.report-quiz-stat-item strong {
+    font-size: 1.25rem;
+    color: var(--secondary, #0A2342);
+}
+
+.report-quiz-stat-item.highlight strong {
+    color: #16a34a;
+}
+
+/* 8. Bottom Summary & Footer */
+.report-summary-box {
+    background: linear-gradient(135deg, #0A2342, #1e3a5f);
+    color: #FFFFFF;
+    border-radius: 8px;
+    padding: 18px 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+    text-align: center;
+}
+
+.report-summary-item span {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.report-summary-item strong {
+    font-size: 1.15rem;
+    color: #FFFFFF;
+}
+
+.report-footer-disclaimer {
+    margin-top: 24px;
+    padding-top: 14px;
+    border-top: 1px solid #e2e8f0;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    text-align: center;
+    line-height: 1.4;
+}
+
+/* --- 4. Responsive Breakdown --- */
+@media (max-width: 860px) {
+    .report-allocation-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .report-health-layout {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+    .report-health-circle-box {
+        border-right: none;
+        border-bottom: 1px solid #e2e8f0;
+        padding-right: 0;
+        padding-bottom: 14px;
+    }
+}
+
+@media (max-width: 600px) {
+    .report-sheet {
+        padding: 20px 16px;
+    }
+    .report-header-section {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .report-meta-info {
+        text-align: left;
+    }
+    .report-allocation-grid {
+        grid-template-columns: 1fr;
+    }
+    .report-card-left {
+        min-width: 100%;
+    }
+    .financial-report-card {
+        padding: 16px;
+    }
+}
+
+/* --- 5. Clean Print Optimization --- */
+@media print {
+    @page {
+        size: A4 portrait;
+        margin: 10mm 12mm 10mm 12mm;
+    }
+
+    body {
+        background: #FFFFFF !important;
+        color: #000000 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .navbar,
+    .account-dropdown-wrapper,
+    .report-top-nav,
+    .financial-report-card,
+    .modal-overlay,
+    #overlay,
+    .nav-toggle,
+    .no-print {
+        display: none !important;
+    }
+
+    .dashboard-wrapper {
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+    }
+
+    .view-section:not(#report-view) {
+        display: none !important;
+    }
+
+    #report-view {
+        display: block !important;
+    }
+
+    .report-sheet {
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+    }
+
+    .report-section-block {
+        page-break-inside: avoid;
+    }
+
+    .report-summary-box {
+        background: #0A2342 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .report-stat-box,
+    .report-alloc-card,
+    .report-ef-container,
+    .report-health-layout,
+    .report-goal-row,
+    .report-tip-card,
+    .report-learning-box {
+        border: 1px solid #ccc !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+}

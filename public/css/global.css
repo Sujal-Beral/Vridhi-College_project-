@@ -1,0 +1,235 @@
+/* --- Color Palette --- */
+
+:root {
+    --primary:      #50C878;
+    --primary-hover:#3dab61;
+    --secondary:    #0A2342;
+    --accent:       #D4AF37;
+    --bg-white:     #FFFDF5;
+    --bg-main:      #f4f6f8;
+    --bg-card:      #FFFFFF;
+    --text-main:    #1a1a2e;
+    --text-light:   #FFFDF5;
+    --text-muted:   #888;
+    --border:       #dde1e7;
+    --primary-light:#d0f5e0;
+}
+
+/* --- Global Reset & Typography --- */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-y: auto;
+}
+
+.app-section {
+    display: none;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Global & Action Buttons --- */
+
+button,
+input[type="submit"],
+.action-btn,
+.login-btn,
+.submit-btn {
+    font-family: inherit;
+}
+
+.action-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-light) !important;
+    background-color: var(--primary);
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    white-space: nowrap;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    background-color: var(--primary-hover);
+    box-shadow: 0 5px 14px rgba(0, 0, 0, 0.2);
+}
+
+.action-btn:active {
+    transform: translateY(0);
+}
+
+/* Form Primary Buttons */
+.login-btn,
+.submit-btn,
+.update-btn,
+.add-goal-btn {
+    background-color: var(--primary) !important;
+    color: var(--text-light) !important;
+    border: none;
+    border-radius: 8px;
+    padding: 11px 20px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(80, 200, 120, 0.3);
+    transition: all 0.25s ease-in-out;
+    width: 100%;
+}
+
+.login-btn:hover,
+.submit-btn:hover,
+.update-btn:hover,
+.add-goal-btn:hover {
+    background-color: var(--primary-hover) !important;
+    color: var(--text-light) !important;
+    box-shadow: 0 6px 18px rgba(80, 200, 120, 0.45);
+    transform: translateY(-2px);
+}
+
+.login-btn:active,
+.submit-btn:active,
+.update-btn:active,
+.add-goal-btn:active {
+    transform: translateY(0);
+}
+
+/* Category Option Buttons / Chips */
+.category-btn {
+    background-color: #FFFFFF;
+    color: var(--text-main);
+    border: 1.5px solid var(--border);
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.category-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background-color: var(--primary-light);
+}
+
+.category-btn.active,
+.category-btn.selected {
+    background-color: var(--primary) !important;
+    color: var(--text-light) !important;
+    border-color: var(--primary) !important;
+    box-shadow: 0 3px 10px rgba(80, 200, 120, 0.3);
+}
+
+/* Logout Button */
+.logout-btn {
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: var(--text-light) !important;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+}
+
+.logout-btn:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* --- Slide-Up Terms & Conditions --- */
+
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(28, 15, 56, 0.6);
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+#overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+#terms-panel {
+    position: fixed;
+    bottom: -100%;
+    left: 0;
+    width: 100%;
+    background-color: var(--bg-card);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    transition: bottom 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 24px 32px 40px;
+    max-height: 75vh;
+    overflow-y: auto;
+}
+
+#terms-panel.active {
+    bottom: 0;
+}
+
+.terms-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--primary-light);
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+}
+
+.terms-header h5 {
+    font-size: 1.2rem;
+    color: var(--secondary);
+    font-weight: 700;
+}
+
+#close-terms {
+    background: none;
+    border: none;
+    font-size: 1.75rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    line-height: 1;
+    transition: color 0.2s ease;
+}
+
+#close-terms:hover {
+    color: var(--secondary);
+}
+
+.terms-body p {
+    margin-bottom: 14px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-main);
+}

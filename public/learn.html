@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/Vridhi_logo.jpeg">
+    <title>Vridhi Learn | Crash Courses</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/animations.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/learn.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="dashboard-body">
+    <nav class="navbar">
+        <div class="nav-brand">Vridhi <span class="nav-tagline">वृद्धि</span></div>
+        <div class="nav-links">
+            <a href="/index.html" data-i18n="nav_dashboard">Dashboard</a>
+            <a href="/index.html#simulator" data-i18n="nav_simulator">What-If Simulator</a>
+            <a href="/index.html#investments" data-i18n="nav_investments">Smart Investments</a>
+            <a href="/index.html#goals" data-i18n="nav_goals">My Goals</a>
+            <a href="/index.html#profile" data-i18n="nav_profile">Financial Profile</a>
+            <a href="/index.html#community" data-i18n="nav_community">Community</a>
+            <a href="/learn.html" class="active-link" data-i18n="nav_learn">Vridhi Learn</a>
+        </div>
+        <div class="nav-right">
+            <div class="account-dropdown-wrapper">
+                <button class="account-btn" id="account-dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+                    <span>👤 Account ▾</span>
+                </button>
+                <div class="account-dropdown-menu" id="account-dropdown-menu">
+                    <div class="dropdown-item-header">
+                        <label for="lang-select">Language / भाषा</label>
+                        <select id="lang-select" class="lang-select" onchange="applyLanguage(this.value)" aria-label="Select Language">
+                            <option value="en">🌐 English</option>
+                            <option value="mr">🌐 मराठी</option>
+                            <option value="hi">🌐 हिंदी</option>
+                        </select>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <button class="dropdown-item-btn logout-btn" id="logout-btn">
+                        🚪 Sign Out
+                    </button>
+                </div>
+            </div>
+            <button class="nav-toggle" id="nav-toggle-btn" aria-label="Toggle navigation">&#9776;</button>
+        </div>
+    </nav>
+
+    <div class="learn-container">
+        <!-- Financial Literacy Quiz Section (Phase 2) -->
+        <h2 class="section-title" id="quiz-heading" data-i18n="quiz_title">Financial Literacy Quiz</h2>
+        <div class="quiz-section-container" id="quiz-section-container">
+            <div class="quiz-card welcome-card">
+                <div class="quiz-card-header">
+                    <div class="quiz-badge">📝 Phase 1: Initial Assessment</div>
+                    <h3>Financial Literacy — Before Quiz</h3>
+                    <p class="quiz-subtitle">This quiz helps us understand your current financial awareness. Your answers will be used to compare your understanding before and after using Vridhi.</p>
+                </div>
+                <div class="quiz-info-grid">
+                    <div class="quiz-info-item">
+                        <span class="info-icon">⏱️</span>
+                        <strong>10 Questions</strong>
+                        <small>Multiple Choice</small>
+                    </div>
+                    <div class="quiz-info-item">
+                        <span class="info-icon">📊</span>
+                        <strong>Baseline Score</strong>
+                        <small>Initial Awareness</small>
+                    </div>
+                    <div class="quiz-info-item">
+                        <span class="info-icon">🌱</span>
+                        <strong>No Negative Marking</strong>
+                        <small>For Educational Learning</small>
+                    </div>
+                </div>
+                <div class="quiz-action-bar">
+                    <button id="start-before-quiz-btn" class="quiz-btn primary-btn btn-start-before-quiz" data-quiz-start="before" onclick="window.startQuiz('before')">
+                        📝 Take Before Quiz
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="video-section-header" id="video-courses" style="margin-top: 40px;">
+            <div class="video-header-content">
+                <h2 class="section-title" id="video-courses-heading" data-i18n="video_courses_title">Video Crash Courses</h2>
+                <p class="video-section-subtitle" data-i18n="video_courses_subtitle">
+                    Curated video lessons from India's top financial educators to help you master personal finance, investing, and wealth creation.
+                </p>
+            </div>
+
+            <!-- Learning Progress Bar -->
+            <div class="video-progress-container" id="video-progress-container">
+                <div class="video-progress-header">
+                    <span class="video-progress-label">
+                        🎓 <strong data-i18n="your_learning_progress">Your Learning Progress:</strong> 
+                        <span id="video-progress-text">0 of 10 courses explored</span>
+                    </span>
+                    <span class="video-progress-pct" id="video-progress-pct">0%</span>
+                </div>
+                <div class="video-progress-bar-track">
+                    <div class="video-progress-bar-fill" id="video-progress-bar-fill" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <!-- Search & Category Filters -->
+            <div class="video-controls-bar">
+                <div class="video-search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" 
+                           id="video-search-input" 
+                           class="video-search-input" 
+                           placeholder="Search courses by topic, creator, or keywords..." 
+                           data-i18n="search_courses_placeholder"
+                           aria-label="Search video courses">
+                </div>
+                <div class="video-category-filters" id="video-category-filters" role="group" aria-label="Filter video courses by category">
+                    <!-- Dynamically populated via videoCourses.js -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Dynamic Video Cards Grid -->
+        <div class="video-grid" id="video-grid-container" aria-live="polite">
+            <!-- Dynamically populated via videoCourses.js -->
+        </div>
+
+        <div class="reports-section-header" style="margin-top: 50px;">
+            <div class="reports-header-content">
+                <h2 class="section-title" id="research-reports-heading" data-i18n="research_reports_title">Research & Reports</h2>
+                <p class="reports-section-subtitle" data-i18n="research_reports_subtitle">
+                    Evidence-based financial research, regulatory guidelines, and educational briefs for Indian households.
+                </p>
+            </div>
+            
+            <!-- Search & Category Filters -->
+            <div class="reports-controls-bar">
+                <div class="reports-search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" 
+                           id="report-search-input" 
+                           class="report-search-input" 
+                           placeholder="Search reports by title, topic, or source..." 
+                           data-i18n="search_reports_placeholder"
+                           aria-label="Search financial reports">
+                </div>
+                <div class="reports-category-filters" id="reports-category-filters" role="group" aria-label="Filter reports by category">
+                    <!-- Dynamically populated via reports.js -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Reports 2-Column Responsive Grid -->
+        <div class="reports-grid" id="reports-grid-container" aria-live="polite">
+            <!-- Dynamically populated via reports.js -->
+        </div>
+    </div>
+
+    <!-- Universal Vridhi Footer -->
+    <footer class="vridhi-footer" role="contentinfo">
+        <div class="footer-container">
+            <!-- Top Multi-Column Grid -->
+            <div class="footer-grid">
+                
+                <!-- Section 1: Brand Column -->
+                <div class="footer-col footer-brand-col">
+                    <div class="footer-brand">
+                        <img src="/images/Vridhi_logo.jpeg" alt="Vridhi Logo" class="footer-logo-img" onerror="this.style.display='none'">
+                        <div class="footer-brand-title">
+                            VRIDHI <span class="footer-brand-hindi">वृद्धि</span>
+                        </div>
+                    </div>
+                    <div class="footer-subtitle" data-i18n="footer_subtitle">
+                        Financial Allocation & Growth Platform
+                    </div>
+                    <p class="footer-tagline-lead" data-i18n="footer_tagline_lead">
+                        Plan your money. Build your future.
+                    </p>
+                    <p class="footer-description" data-i18n="footer_desc">
+                        Vridhi helps users understand, plan, and organize their finances through structured financial tools and educational resources.
+                    </p>
+                </div>
+
+                <!-- Section 2: Platform Links -->
+                <div class="footer-col">
+                    <h4 class="footer-col-title" data-i18n="footer_platform_title">Platform</h4>
+                    <ul class="footer-links">
+                        <li><a href="/index.html#dashboard" class="footer-nav-link" data-i18n="nav_dashboard">Dashboard</a></li>
+                        <li><a href="/index.html#simulator" class="footer-nav-link" data-i18n="footer_financial_plan">Financial Plan</a></li>
+                        <li><a href="/index.html#goals" class="footer-nav-link" data-i18n="nav_goals">My Goals</a></li>
+                        <li><a href="/index.html#report" class="footer-nav-link" data-i18n="footer_monthly_report">Monthly Report</a></li>
+                    </ul>
+                </div>
+
+                <!-- Section 3: Learn Links -->
+                <div class="footer-col">
+                    <h4 class="footer-col-title" data-i18n="footer_learn_title">Learn</h4>
+                    <ul class="footer-links">
+                        <li><a href="/learn.html" class="footer-learn-link" data-i18n="nav_learn">Vridhi Learn</a></li>
+                        <li><a href="#video-courses" class="footer-learn-link" data-i18n="video_courses_title">Video Crash Courses</a></li>
+                        <li><a href="#research-reports-heading" class="footer-learn-link" data-i18n="research_reports_title">Research & Reports</a></li>
+                        <li><a href="#quiz-heading" class="footer-learn-link" data-i18n="quiz_title">Financial Quiz</a></li>
+                    </ul>
+                </div>
+
+                <!-- Section 4: Support & Legal Links -->
+                <div class="footer-col">
+                    <h4 class="footer-col-title" data-i18n="footer_support_legal_title">Support & Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="/index.html#community" class="footer-support-link" data-i18n="footer_help_support">Help / Support</a></li>
+                        <li><a href="#terms-panel" class="footer-terms-trigger" data-i18n="footer_faq">FAQ</a></li>
+                        <li><a href="#terms-panel" class="footer-terms-trigger" data-i18n="footer_privacy_policy">Privacy Policy</a></li>
+                        <li><a href="#terms-panel" class="footer-terms-trigger" data-i18n="terms">Terms of Use</a></li>
+                        <li><a href="#footer-disclaimer" class="footer-disclaimer-link" data-i18n="footer_disclaimer_link">Disclaimer</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- Financial Disclaimer Section -->
+            <div class="footer-disclaimer" id="footer-disclaimer" role="note" aria-label="Financial Disclaimer">
+                <div class="disclaimer-header">
+                    <span class="disclaimer-icon">⚖️</span>
+                    <strong data-i18n="footer_disclaimer_title">Financial Disclaimer:</strong>
+                </div>
+                <p data-i18n="footer_disclaimer_text">
+                    Vridhi provides financial education and planning tools for informational purposes only. The information presented does not constitute financial, investment, tax, or legal advice. Users should consider their individual circumstances and consult a qualified professional before making financial decisions.
+                </p>
+            </div>
+
+            <!-- Bottom Footer Bar -->
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    &copy; 2026 Vridhi. <span data-i18n="footer_all_rights">All rights reserved.</span>
+                </div>
+                <div class="footer-motto">
+                    <span>Plan</span> &bull; <span>Allocate</span> &bull; <span>Grow</span>
+                </div>
+                <div class="footer-social-links" aria-label="Social and developer links">
+                    <a href="https://github.com/Sujal-Beral/Vridhi-College_project-" target="_blank" rel="noopener noreferrer" class="footer-social-icon" aria-label="Vridhi GitHub Repository" title="GitHub">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    </a>
+                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="footer-social-icon" aria-label="LinkedIn" title="LinkedIn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="footer-social-icon" aria-label="Instagram" title="Instagram">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Report Reader Modal Backdrop -->
+    <div class="report-modal-backdrop" id="report-modal-backdrop"></div>
+
+    <!-- Report Reader Modal -->
+    <div class="report-reader-modal" id="report-reader-modal" role="dialog" aria-modal="true" aria-labelledby="modal-report-title">
+        <div class="report-modal-header">
+            <div class="modal-header-badges">
+                <span class="report-category-tag" id="modal-category-badge">Investing</span>
+                <span class="report-read-time" id="modal-readtime-text">⏱️ 4 min read</span>
+            </div>
+            <button class="modal-close-btn" id="modal-close-btn" aria-label="Close report reader">&times;</button>
+        </div>
+        
+        <div class="report-modal-body">
+            <h2 class="modal-report-title" id="modal-report-title">The Power of Compounding in India</h2>
+            <div class="modal-meta-row">
+                <div class="modal-meta-item">
+                    <span class="meta-label">🏛️ Source:</span>
+                    <strong id="modal-source-text">NISM / AMFI</strong>
+                </div>
+                <div class="modal-meta-item">
+                    <span class="meta-label">📅 Year:</span>
+                    <span id="modal-year-text">2025–2026</span>
+                </div>
+            </div>
+
+            <!-- Key Takeaways Highlight Box -->
+            <div class="modal-takeaways-card">
+                <div class="takeaways-header">
+                    <span class="takeaways-icon">💡</span>
+                    <h4 data-i18n="key_takeaways">Key Takeaways</h4>
+                </div>
+                <ul class="modal-takeaways-list" id="modal-takeaways-list">
+                    <!-- Populated dynamically -->
+                </ul>
+            </div>
+
+            <!-- Full Article Content -->
+            <div class="modal-article-body" id="modal-article-body">
+                <!-- Populated dynamically -->
+            </div>
+        </div>
+
+        <div class="report-modal-footer">
+            <button type="button" class="modal-btn secondary-btn" id="modal-footer-close-btn" data-i18n="close_reader">
+                Close Reader
+            </button>
+            <a href="#" id="modal-official-source-btn" class="modal-btn primary-btn" target="_blank" rel="noopener noreferrer" data-i18n="open_official_source">
+                Open Official Source ↗
+            </a>
+        </div>
+    </div>
+
+    <!-- Video Player Modal Backdrop -->
+    <div class="video-modal-backdrop" id="video-modal-backdrop"></div>
+
+    <!-- Video Player Modal -->
+    <div class="video-player-modal" id="video-player-modal" role="dialog" aria-modal="true" aria-labelledby="modal-video-title">
+        <div class="video-modal-header">
+            <div class="video-modal-badges">
+                <span class="video-category-tag" id="modal-video-category">Investing</span>
+                <span class="video-difficulty-badge" id="modal-video-difficulty">Beginner</span>
+                <span class="video-duration-badge" id="modal-video-duration">⏱️ 20 min</span>
+            </div>
+            <button class="video-modal-close-btn" id="video-modal-close-btn" aria-label="Close video player">&times;</button>
+        </div>
+
+        <div class="video-modal-body">
+            <!-- 16:9 Video Player Container -->
+            <div class="video-player-frame-wrapper" id="video-player-frame-wrapper">
+                <!-- Iframe injected dynamically upon opening -->
+            </div>
+
+            <div class="video-modal-info">
+                <div class="video-modal-title-row">
+                    <h2 class="modal-video-title" id="modal-video-title">Stock Market For Beginners</h2>
+                    <div class="video-modal-watched-badge" id="modal-watched-indicator" style="display: none;">
+                        ✓ Watched
+                    </div>
+                </div>
+
+                <div class="video-modal-meta-row">
+                    <div class="video-modal-meta-item">
+                        <span>👨‍🏫 Instructor:</span>
+                        <strong id="modal-video-instructor">CA Rachana Ranade</strong>
+                    </div>
+                    <div class="video-modal-meta-item">
+                        <span>📺 Platform:</span>
+                        <strong id="modal-video-platform">YouTube</strong>
+                    </div>
+                </div>
+
+                <p class="modal-video-summary" id="modal-video-summary"></p>
+
+                <!-- What You'll Learn Takeaways Box -->
+                <div class="video-takeaways-card">
+                    <div class="video-takeaways-header">
+                        <span class="video-takeaways-icon">💡</span>
+                        <h4 data-i18n="what_you_will_learn">What You'll Learn</h4>
+                    </div>
+                    <ul class="video-takeaways-list" id="modal-video-takeaways-list">
+                        <!-- Populated dynamically -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="video-modal-footer">
+            <button type="button" class="video-modal-btn secondary-btn" id="video-modal-footer-close-btn" data-i18n="close">
+                Close
+            </button>
+            <button type="button" class="video-modal-btn primary-btn" id="video-modal-mark-watched-btn" data-i18n="mark_as_watched">
+                ✓ Mark as Watched
+            </button>
+        </div>
+    </div>
+
+    <div id="overlay"></div>
+    <div id="terms-panel">
+        <div class="terms-header">
+            <h5>Terms of Use, Privacy Policy & FAQ</h5>
+            <button id="close-terms">&times;</button>
+        </div>
+        <div class="terms-body">
+            <h5 style="color: var(--secondary); margin-bottom: 6px; font-weight: 700;">1. Terms of Use</h5>
+            <p>Vridhi (वृद्धि) is an educational financial planning and literacy platform designed to help users budget, track milestones, and simulate hypothetical scenarios. By using this service, you acknowledge that all figures, scores, and projections are educational estimates and do not constitute certified financial or investment advisory.</p>
+            
+            <h5 style="color: var(--secondary); margin-top: 14px; margin-bottom: 6px; font-weight: 700;">2. Privacy Policy</h5>
+            <p>Your personal information, financial data, and survey scores are securely associated with your authenticated session. Vridhi adheres to strict data privacy principles — we do not sell, monetize, or expose individual financial metrics to third-party commercial entities.</p>
+
+            <h5 style="color: var(--secondary); margin-top: 14px; margin-bottom: 6px; font-weight: 700;">3. Frequently Asked Questions (FAQ)</h5>
+            <p style="margin-bottom: 6px;"><strong>Q: What is the 20-20-30-30 framework?</strong><br>A: It is Vridhi's educational allocation model: 20% Secure Savings, 20% Emergency Shield, 30% Home & Essentials, and 30% Wealth Generation.</p>
+            <p style="margin-bottom: 6px;"><strong>Q: How do I generate my Monthly Financial Plan?</strong><br>A: From the Dashboard, click "View Report" or "Download Plan" on the My Financial Report card to view and export your A4 PDF.</p>
+            <p><strong>Q: Is my emergency fund coverage calculated automatically?</strong><br>A: Yes! Vridhi evaluates your current savings against 3-month and 6-month essential expense targets in real time.</p>
+        </div>
+    </div>
+
+    <script src="/js/i18n.js"></script>
+    <script src="/js/navigation.js"></script>
+    <script src="/js/quiz.js"></script>
+    <script src="/js/reports.js"></script>
+    <script src="/js/videoCourses.js"></script>
+</body>
+</html>

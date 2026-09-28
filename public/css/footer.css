@@ -1,0 +1,324 @@
+/* ==========================================================================
+   public/css/footer.css
+   Vridhi (वृद्धि) — Universal Application Footer Styles
+   Designed to seamlessly match Vridhi's financial design system.
+   ========================================================================== */
+
+/* --- Sticky Footer Container Structure --- */
+#dashboard-section.active {
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 100vh !important;
+}
+
+body.dashboard-body {
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 100vh !important;
+    margin: 0;
+}
+
+.dashboard-wrapper,
+.learn-container {
+    flex: 1 0 auto;
+}
+
+/* --- Main Footer Element --- */
+.vridhi-footer {
+    width: 100%;
+    background-color: var(--secondary, #0A2342);
+    color: #cbd5e1;
+    border-top: 3px solid var(--primary, #50C878);
+    position: relative;
+    z-index: 20;
+    box-sizing: border-box;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    margin-top: auto;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 24px 28px;
+    box-sizing: border-box;
+}
+
+/* --- Multi-Column Footer Grid --- */
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.2fr;
+    gap: 40px;
+    align-items: start;
+    margin-bottom: 36px;
+}
+
+/* Column 1: Brand Column */
+.footer-brand-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.footer-logo-img {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.footer-brand-title {
+    color: #FFFFFF;
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.footer-brand-hindi {
+    color: var(--primary, #50C878);
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.footer-subtitle {
+    color: var(--primary, #50C878);
+    font-size: 0.88rem;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+}
+
+.footer-tagline-lead {
+    color: #e2e8f0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-style: italic;
+    margin: 4px 0 0 0;
+    border-left: 3px solid var(--primary, #50C878);
+    padding-left: 10px;
+}
+
+.footer-description {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin: 6px 0 0 0;
+    max-width: 380px;
+}
+
+/* Columns 2, 3, 4: Navigation Columns */
+.footer-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-col-title {
+    color: #FFFFFF;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin: 0 0 16px 0;
+    padding-bottom: 8px;
+    position: relative;
+    letter-spacing: 0.3px;
+}
+
+.footer-col-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 28px;
+    height: 2px;
+    background-color: var(--primary, #50C878);
+    border-radius: 2px;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-links li a,
+.footer-links li button {
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: color 0.2s ease, transform 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-family: inherit;
+    text-align: left;
+}
+
+.footer-links li a:hover,
+.footer-links li button:hover {
+    color: var(--primary, #50C878);
+    transform: translateX(3px);
+}
+
+.footer-links li a:focus-visible,
+.footer-links li button:focus-visible {
+    outline: 2px solid var(--primary, #50C878);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+/* --- Financial Disclaimer Box --- */
+.footer-disclaimer {
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-left: 3.5px solid var(--accent, #D4AF37);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+    scroll-margin-top: 80px;
+}
+
+.disclaimer-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.disclaimer-icon {
+    font-size: 1rem;
+}
+
+.disclaimer-header strong {
+    color: #e2e8f0;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+
+.footer-disclaimer p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #94a3b8;
+    line-height: 1.6;
+}
+
+/* --- Bottom Footer Bar --- */
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 0.85rem;
+    color: #94a3b8;
+}
+
+.footer-copyright {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.footer-motto {
+    color: #e2e8f0;
+    font-weight: 600;
+    font-size: 0.88rem;
+    letter-spacing: 0.5px;
+}
+
+.footer-motto span {
+    color: var(--primary, #50C878);
+}
+
+.footer-social-links {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.footer-social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    color: #cbd5e1;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.2s ease;
+}
+
+.footer-social-icon:hover {
+    background: var(--primary, #50C878);
+    color: #0A2342;
+    transform: translateY(-2px);
+    border-color: var(--primary, #50C878);
+    box-shadow: 0 4px 10px rgba(80, 200, 120, 0.3);
+}
+
+.footer-social-icon:focus-visible {
+    outline: 2px solid var(--primary, #50C878);
+    outline-offset: 3px;
+}
+
+/* --- Responsive Breakpoints --- */
+@media (max-width: 992px) {
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+    }
+    .footer-brand-col {
+        grid-column: span 2;
+    }
+    .footer-description {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .footer-container {
+        padding: 36px 18px 24px;
+    }
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 26px;
+    }
+    .footer-brand-col {
+        grid-column: span 1;
+    }
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+        gap: 14px;
+    }
+    .footer-col-title::after {
+        left: 0;
+    }
+}
+
+/* --- Print Media Query (hide footer in printable reports) --- */
+@media print {
+    .vridhi-footer {
+        display: none !important;
+    }
+}

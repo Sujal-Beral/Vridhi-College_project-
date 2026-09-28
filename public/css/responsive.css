@@ -1,0 +1,218 @@
+/* public/css/responsive.css */
+
+/* ================================================================
+   LAPTOP / MEDIUM SCREENS  (993px – 1366px)
+   ================================================================ */
+@media screen and (max-width: 1200px) {
+    .navbar {
+        padding: 0 18px;
+        gap: 1rem;
+    }
+
+    .nav-links {
+        gap: 0.95rem;
+    }
+
+    .nav-links a {
+        font-size: 0.85rem;
+    }
+
+    .account-btn {
+        padding: 6px 10px;
+        font-size: 0.82rem;
+    }
+
+    .dashboard-allocation-layout {
+        gap: 1.25rem;
+    }
+}
+
+/* ================================================================
+   TABLET  (max-width: 992px)
+   ================================================================ */
+@media screen and (max-width: 992px) {
+    /* Dashboard Allocation Layout on Tablet */
+    .dashboard-allocation-layout {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+
+    .allocation-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .allocation-chart-container {
+        min-height: 250px;
+    }
+
+    /* General dashboard layout stacks vertically */
+    .dashboard-layout {
+        flex-direction: column;
+    }
+
+    .chart-container {
+        min-width: unset;
+        width: 100%;
+    }
+
+    .principles-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+    /* Dashboard Allocation Layout on Tablet */
+    .dashboard-allocation-layout {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+
+    .allocation-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .allocation-chart-container {
+        min-height: 250px;
+    }
+
+    /* General dashboard layout stacks vertically */
+    .dashboard-layout {
+        flex-direction: column;
+    }
+
+    .chart-container {
+        min-width: unset;
+        width: 100%;
+    }
+
+    .principles-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* ================================================================
+   MOBILE  (max-width: 768px)
+   ================================================================ */
+@media screen and (max-width: 768px) {
+    .navbar {
+        padding: 0 14px;
+        height: 60px;
+    }
+
+    .nav-brand {
+        font-size: 1.35rem;
+    }
+
+    .nav-right {
+        gap: 8px;
+    }
+
+    .account-btn {
+        padding: 5px 9px;
+        font-size: 0.78rem;
+    }
+
+    .account-dropdown-menu {
+        width: 210px;
+        right: 0;
+    }
+
+    .dashboard-wrapper {
+        padding: 76px 12px 36px;
+    }
+
+    .dashboard-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .dashboard-header .total-income {
+        font-size: 1.15rem;
+    }
+
+    /* Mobile: Single Column Vertical Stacking in Exact Order:
+       1. Secure Savings -> 2. Emergency Shield -> 3. Home & Essentials -> 4. Wealth Generation -> 5. Chart */
+    .dashboard-allocation-layout {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .allocation-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .allocation-card {
+        min-height: 105px;
+        padding: 1rem 0.85rem;
+    }
+
+    .allocation-card .amount {
+        font-size: 1.3rem;
+    }
+
+    .allocation-chart-container {
+        min-height: 240px;
+        padding: 1rem;
+    }
+
+    .chart-wrapper {
+        max-width: 230px;
+        height: 190px;
+    }
+
+    .impact-grid,
+    #goals-grid,
+    .principles-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .investment-categories {
+        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+        gap: 10px;
+    }
+
+    .goal-card,
+    .card {
+        width: 100%;
+    }
+
+    .dashboard-container,
+    .goals-container,
+    .survey-container,
+    .profile-container {
+        padding: 8px;
+    }
+
+    .goal-modal {
+        width: 95vw;
+        padding: 18px;
+    }
+}
+
+/* ================================================================
+   SMALL MOBILE  (max-width: 480px)
+   ================================================================ */
+@media screen and (max-width: 480px) {
+    .health-score-circle {
+        width: 110px;
+        height: 110px;
+    }
+
+    .health-score-circle span {
+        width: 84px;
+        height: 84px;
+        font-size: 1.2rem;
+    }
+
+    h1, h2 {
+        font-size: 1.35rem;
+    }
+
+    h3, h4 {
+        font-size: 1rem;
+    }
+
+    .action-btn {
+        padding: 7px 10px;
+        font-size: 0.8rem;
+    }
+}
